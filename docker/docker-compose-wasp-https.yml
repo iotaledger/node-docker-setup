@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+##################################################################
+#  INX Extensions                                                #
+#  disable them out by commenting out the services               #
+##################################################################
+
+  wasp:
+    labels:
+      - "traefik.http.routers.wasp-api.rule=Host(`${HORNET_HOST}`) && (Path(`/wasp/api`) || PathPrefix(`/wasp/api/`))"
+      - "traefik.http.routers.wasp-api.entrypoints=websecure"
+      - "traefik.http.routers.wasp-api.tls=true"
+      - "traefik.http.routers.wasp-dashboard.rule=Host(`${HORNET_HOST}`) && (Path(`/wasp/dashboard`) || PathPrefix(`/wasp/dashboard/`))"
+      - "traefik.http.routers.wasp-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.wasp-dashboard.tls=true"

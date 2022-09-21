@@ -1,0 +1,42 @@
+version: '3'
+services:    
+  wasp:
+    container_name: wasp
+    image: iotaledger/wasp:0.3.2
+    stop_grace_period: 5m
+    restart: unless-stopped
+    depends_on:
+      - hornet
+      - inx-indexer
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wasp-api.service=wasp-api"
+      - "traefik.http.routers.wasp-api.rule=Path(`/wasp/api`) || PathPrefix(`/wasp/api/`)"
+      - "traefik.http.routers.wasp-api.entrypoints=web"
+      - "traefik.http.services.wasp-api.loadbalancer.server.port=9090"
+      - "traefik.http.routers.wasp-api.middlewares=rewrite-wasp-api"
+      - "traefik.http.middlewares.rewrite-wasp-api.stripprefix.prefixes=/wasp/api"
+      - "traefik.http.routers.wasp-dashboard.service=wasp-dashboard"
+      - "traefik.http.routers.wasp-dashboard.rule=Path(`/wasp/dashboard`) || PathPrefix(`/wasp/dashboard/`)"
+      - "traefik.http.routers.wasp-dashboard.entrypoints=web"
+      - "traefik.http.services.wasp-dashboard.loadbalancer.server.port=7000"
+      - "traefik.http.routers.wasp-dashboard.middlewares=rewrite-wasp-dashboard"
+      - "traefik.http.middlewares.rewrite-wasp-dashboard.stripprefix.prefixes=/wasp/dashboard"
+    ports:
+      - "4000:4000/udp" # Peering
+      - "7000:7000/tcp" # Wasp Dashboard
+      - "9090:9090/tcp" # Wasp WebAPI
+      - "5550:5550/tcp" # Nano MSG
+    volumes:
+      - ./data/wasp:/waspdb
+    command:
+      - "--inx.address=hornet:9029"
+      - "--logger.level=info"
+      - "--database.directory=/waspdb"
+      - "--webapi.bindAddress=wasp:9090"
+      - "--webapi.auth.scheme=none"
+      - "--nanomsg.enabled=true"
+      - "--dashboard.bindAddress=wasp:7000"
+      - "--dashboard.auth.scheme=basic"
+      - "--metrics.enabled=false"
+      - "--metrics.bindAddress=wasp:9312"

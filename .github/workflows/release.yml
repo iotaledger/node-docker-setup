@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v3
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=match,pattern=v(\d+.\d+),suffix=-alpha,group=1,enable=${{ contains(github.ref, '-alpha') }}
+            type=match,pattern=v(\d+.\d+),suffix=-beta,group=1,enable=${{ contains(github.ref, '-beta') }}
+            type=match,pattern=v(\d+.\d+),suffix=-rc,group=1,enable=${{ contains(github.ref, '-rc') }}
+
+      - name: Create node-docker-setup.tar.gz
+        uses: ihiroky/archive-action@v1
+        with:
+          root_dir: docker
+          file_path: node-docker-setup.tar.gz
+
+      - name: Upload node-docker-setup.tar.gz file
+        uses: Shopify/upload-to-release@v1.0.1
+        with:
+          name: node-docker-setup-${{ steps.meta.outputs.version }}.tar.gz
+          path: node-docker-setup.tar.gz
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
