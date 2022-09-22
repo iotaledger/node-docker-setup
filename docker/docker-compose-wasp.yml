@@ -1,3 +1,8 @@
+#
+# node-docker-setup __VERSION__
+# https://github.com/iotaledger/node-docker-setup
+#
+
 version: '3'
 services:    
   wasp:

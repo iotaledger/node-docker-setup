@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#
+# node-docker-setup __VERSION__
+# https://github.com/iotaledger/node-docker-setup
+#
+
 if [ ! -f .env ]; then
   echo "No .env file found. Please see README.md for more details"
 fi
