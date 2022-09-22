@@ -3,7 +3,7 @@ This setup lets you run an [IOTA Hornet node](https://wiki.iota.org/hornet/welco
 
 ## Requirements
 1. A recent release of Docker enterprise or community edition. You can find installation instructions in the [official Docker documentation](https://docs.docker.com/engine/install/).
-2. [Docker Compose CLI plugin](https://docs.docker.com/compose/install/compose-plugin/).
+2. [Docker Compose CLI plugin](https://docs.docker.com/compose/install/linux/).
 3. A registered domain name pointing to the public IP address of your server. _(optional if not using HTTPS)_
 4. Opening up the following ports in your servers firewall:
   - `15600 TCP` - Used for gossip.
@@ -49,7 +49,7 @@ Add your neighbors addresses to the `peering.json` file.
 
 > **NOTE**:
 > This step is recommended, but optional if you are using autopeering.
-> See [peering](../references/peering.md) for more information.
+> See [peering](https://wiki.iota.org/hornet/develop/references/peering) for more information.
 
 ### 3. Create the `data` folder
 
