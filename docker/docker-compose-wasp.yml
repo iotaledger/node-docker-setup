@@ -7,7 +7,7 @@ version: '3'
 services:    
   wasp:
     container_name: wasp
-    image: iotaledger/wasp:0.3.2
+    image: iotaledger/wasp:v0.3.3
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
