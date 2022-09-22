@@ -132,7 +132,7 @@ services:
       - ./data:/app/database
     command:
       - "--inx.address=hornet:9029"
-      - "--indexer.db.path=database/indexer"
+      - "--indexer.db.sqlite.path=database/indexer"
       - "--restAPI.bindAddress=inx-indexer:9091"
       - "--prometheus.enabled=true"
       - "--prometheus.bindAddress=inx-indexer:9312"
