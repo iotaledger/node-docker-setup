@@ -24,6 +24,14 @@ jobs:
             type=match,pattern=v(\d+.\d+),suffix=-beta,group=1,enable=${{ contains(github.ref, '-beta') }}
             type=match,pattern=v(\d+.\d+),suffix=-rc,group=1,enable=${{ contains(github.ref, '-rc') }}
 
+      - name: Find and Replace VERSION
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "__VERSION__"
+          replace: ${{ steps.meta.outputs.version }}
+          include: "docker/*"
+          regex: false
+
       - name: Create node-docker-setup.tar.gz
         uses: ihiroky/archive-action@v1
         with:
