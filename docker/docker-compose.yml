@@ -6,6 +6,10 @@
 version: '3'
 services:
 
+##################################################################
+#  HORNET                                                        #
+##################################################################
+
   hornet:
     container_name: hornet
     image: iotaledger/hornet:2.0-rc
@@ -80,6 +84,8 @@ services:
       - ./data/prometheus/:/prometheus
       - ./assets/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - /etc/localtime:/etc/localtime:ro
+    profiles:
+      - monitoring
 
   cadvisor:
     container_name: cadvisor
@@ -104,6 +110,8 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+    profiles:
+      - monitoring
 
   grafana:
     container_name: grafana
@@ -121,6 +129,8 @@ services:
     volumes:
       - ./data/grafana:/var/lib/grafana
       - ./assets/grafana/:/etc/grafana/provisioning/
+    profiles:
+      - monitoring
 
 ##################################################################
 #  INX Extensions                                                #
@@ -232,3 +242,50 @@ services:
       - "--dashboard.auth.passwordSalt=${DASHBOARD_SALT:-0000000000000000000000000000000000000000000000000000000000000000}"
       - "--prometheus.enabled=true"
       - "--prometheus.bindAddress=inx-dashboard:9312"
+
+##################################################################
+#  WASP                                                          #
+##################################################################
+
+  wasp:
+    container_name: wasp
+    image: iotaledger/wasp:latest
+    stop_grace_period: 5m
+    restart: unless-stopped
+    depends_on:
+      hornet:
+        condition: service_healthy
+      inx-indexer:
+        condition: service_started
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wasp-api.service=wasp-api"
+      - "traefik.http.routers.wasp-api.rule=Path(`/wasp/api`) || PathPrefix(`/wasp/api/`)"
+      - "traefik.http.routers.wasp-api.entrypoints=web"
+      - "traefik.http.services.wasp-api.loadbalancer.server.port=9090"
+      - "traefik.http.routers.wasp-api.middlewares=rewrite-wasp-api"
+      - "traefik.http.middlewares.rewrite-wasp-api.stripprefix.prefixes=/wasp/api"
+      - "traefik.http.routers.wasp-dashboard.service=wasp-dashboard"
+      - "traefik.http.routers.wasp-dashboard.rule=Path(`/wasp/dashboard`) || PathPrefix(`/wasp/dashboard/`)"
+      - "traefik.http.routers.wasp-dashboard.entrypoints=web"
+      - "traefik.http.services.wasp-dashboard.loadbalancer.server.port=7000"
+      - "traefik.http.routers.wasp-dashboard.middlewares=rewrite-wasp-dashboard"
+      - "traefik.http.middlewares.rewrite-wasp-dashboard.stripprefix.prefixes=/wasp/dashboard"
+    ports:
+      - "4000:4000/udp" # Peering
+      - "5550:5550/tcp" # Nano MSG
+    volumes:
+      - ./data/wasp:/app/waspdb
+    command:
+      - "--inx.address=hornet:9029"
+      - "--logger.level=info"
+      - "--database.directory=/app/waspdb"
+      - "--webapi.bindAddress=wasp:9090"
+      - "--webapi.auth.scheme=none"
+      - "--nanomsg.enabled=true"
+      - "--dashboard.bindAddress=wasp:7000"
+      - "--dashboard.auth.scheme=basic"
+      - "--metrics.enabled=false"
+      - "--metrics.bindAddress=wasp:9312"
+    profiles:
+      - wasp

@@ -1,15 +1,17 @@
 # Node Docker Setup
-This setup lets you run an [IOTA Hornet node](https://wiki.iota.org/hornet/welcome) using Docker to manage your services and Traefik as [a reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) to enable (optional) TLS using [Let's Encrypt](https://letsencrypt.org/), control access to your node and route requests to the correct endpoints.
+This setup lets you run an [IOTA Hornet node](https://wiki.iota.org/hornet/welcome) and additional services using Docker and Traefik as [a reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) to enable (optional) TLS using [Let's Encrypt](https://letsencrypt.org/), control access to your node and route requests to the correct endpoints.
 
 ## Requirements
 1. A recent release of Docker enterprise or community edition. You can find installation instructions in the [official Docker documentation](https://docs.docker.com/engine/install/).
 2. [Docker Compose CLI plugin](https://docs.docker.com/compose/install/linux/).
 3. A registered domain name pointing to the public IP address of your server. _(optional if not using HTTPS)_
 4. Opening up the following ports in your servers firewall:
-  - `15600 TCP` - Used for gossip.
-  - `14626 UDP` - Used for autopeering.
+  - `15600 TCP` - Used for HORNET gossip.
+  - `14626 UDP` - Used for HORNET autopeering.
   - `80 TCP` - Used for HTTP. _(can be changed, see below)_
   - `443 TCP` - Used for HTTPS. _(optional if not using HTTPS)_
+  - `4000 UDP` - Used for Wasp gossip. _(optional if not using Wasp)_
+  - `5550 TCP` - Used for Wasp nanomsg events. _(optional if not using Wasp)_
 
 ## Prepare
 
@@ -28,7 +30,7 @@ COMPOSE_FILE=docker-compose.yml:docker-compose-https.yml
 
 ACME_EMAIL=your-email@example.com
 
-HORNET_HOST=node.your-domain.com
+NODE_HOST=node.your-domain.com
 ```
 
 * Replace `your-email@example.com` with the e-mail used for issuing a [Let's Encrypt](https://letsencrypt.org) SSL certificate.
@@ -45,7 +47,7 @@ HTTP_PORT=9000
 
 ### 2. Setup neighbors
 
-Add your neighbors addresses to the `peering.json` file.
+Add your HORNET neighbor addresses to the `peering.json` file.
 
 > **NOTE**:
 > This step is recommended, but optional if you are using autopeering.
@@ -53,8 +55,8 @@ Add your neighbors addresses to the `peering.json` file.
 
 ### 3. Create the `data` folder
 
-All files used by HORNET, the INX extensions, Traefik & co will be stored in a directory called `data`.
-Docker image runs under user with user id 65532 and group id 65532, so this directory needs to have the correct permissions to be accessed by HORNET.
+All files used by HORNET, the INX extensions, Wasp, Traefik & co will be stored in a directory called `data`.
+Docker image runs under user with user id 65532 and group id 65532, so this directory needs to have the correct permissions to be accessed by the containers.
 To create this directory with correct permissions run the contained script:
 
 ```sh
@@ -63,7 +65,7 @@ To create this directory with correct permissions run the contained script:
 
 ### 4. Set dashboard credentials
 
-To access your nodes dashboard, a set of credentials need to be configured.
+To access your HORNET dashboard, a set of credentials need to be configured.
 Run the following command to generate a password hash and salt for the dashboard:
 
 ```
@@ -85,24 +87,50 @@ If you want to change the default `admin` username, you can add this line to you
 DASHBOARD_USERNAME=someotherusername
 ```
 
+### 5. Enable additional monitoring
+
+To enable additional monitoring (cAdvisor, Prometheus, Grafana), the docker compose profile needs to be configured.
+Create a file named `.env` if you did not create it already and add the following line:
+
+```
+COMPOSE_PROFILES=monitoring
+```
+
+### 6. Enable Wasp node
+
+To also run a Wasp node, the docker compose profile needs to be configured.
+Create a file named `.env` if you did not create it already and add the following line:
+
+```
+COMPOSE_PROFILES=wasp
+```
+
+If you already enabled the `monitoring` profile, modify the profiles:
+```
+COMPOSE_PROFILES=monitoring,wasp
+```
+
+
 ## Run
 
-### Starting HORNET
+### Starting the node
 
-You can start a HORNET by running:
+You can start the HORNET node and INX extensions by running:
 
 ```sh
 docker compose up -d
 ```
 
-* `-d` Instructs Docker to start HORNET in the background.
+* `-d` Instructs Docker to start the containers in the background.
 
 #### HTTPS
 
-After starting HORNET you will be able to access your node at the following endpoints:
+After starting the node you will be able to access your services at the following endpoints:
 - API: `https://node.your-domain.com/api/routes`
-- Dashboard: `https://node.your-domain.com/dashboard`
-- Grafana: `https://node.your-domain.com/grafana`
+- HORNET Dashboard: `https://node.your-domain.com/dashboard`
+- Grafana: `https://node.your-domain.com/grafana`  _(optional if using "monitoring" profile)_
+- Wasp API: `https://node.your-domain.com/wasp/api`  _(optional if using "wasp" profile)_
+- Wasp Dashboard: `https://node.your-domain.com/wasp/dashboard`  _(optional if using "wasp" profile)_
 
 > **_Warning:_**
 > After starting your node for the first time, please change the default grafana credentials<br />
@@ -113,15 +141,17 @@ You can configure your wallet software to use `https://node.your-domain.com`
 
 #### HTTP
 
-After starting HORNET you will be able to access your node at the following endpoints:
+After starting the node you will be able to access your services at the following endpoints:
 - API: `http://localhost/api/routes`
-- Dashboard: `http://localhost/dashboard`
-- Grafana: `http://localhost/grafana`
-
+- HORNET Dashboard: `http://localhost/dashboard`
+- Grafana: `http://localhost/grafana`  _(optional if using "monitoring" profile)_
+- Wasp API: `http://localhost/wasp/api`  _(optional if using "wasp" profile)_
+- Wasp Dashboard: `http://localhost/wasp/dashboard`  _(optional if using "wasp" profile)_
 
 > **Note:_**
 > If you changed the default `HTTP_PORT` value, you will need to add the port to the urls.
 
+You can configure your wallet software to use `http://localhost`
 
 ### Displaying Log Output
 
@@ -133,9 +163,9 @@ docker compose logs -f hornet
 * `-f`
   Instructs Docker to continue displaying the log to `stdout` until CTRL+C is pressed.
 
-### Stopping HORNET
+### Stopping the node
 
-You can stop HORNET container by running:
+You can stop the HORNET node and INX extensions by running:
 ```sh
 docker compose down
 ```
@@ -164,5 +194,4 @@ docker compose run hornet tool jwt-api --databasePath data/p2pstore
 ## INX
 
 This setup includes the INX extensions listed at the beginning of this guide.
-If you want to disable certain extensions you can comment out the different services in the `docker-compose.yml` file and restart HORNET.
-
+If you want to disable certain extensions you can comment out the different services in the `docker-compose.yml` file and restart the node.

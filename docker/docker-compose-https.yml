@@ -6,9 +6,13 @@
 version: '3'
 services:
 
+##################################################################
+#  HORNET                                                        #
+##################################################################
+
   hornet:
     labels:
-      - "traefik.http.routers.hornet.rule=Host(`${HORNET_HOST}`)"
+      - "traefik.http.routers.hornet.rule=Host(`${NODE_HOST}`)"
       - "traefik.http.routers.hornet.entrypoints=websecure"
       - "traefik.http.routers.hornet.tls=true"
       - "traefik.http.routers.hornet.tls.certresolver=myresolver"
@@ -38,11 +42,11 @@ services:
 
   grafana:
     labels:
-      - "traefik.http.routers.grafana.rule=Host(`${HORNET_HOST}`) && (Path(`/grafana`) || PathPrefix(`/grafana/`))"
+      - "traefik.http.routers.grafana.rule=Host(`${NODE_HOST}`) && (Path(`/grafana`) || PathPrefix(`/grafana/`))"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls=true"
     environment:
-      - GF_SERVER_DOMAIN=${HORNET_HOST}
+      - GF_SERVER_DOMAIN=${NODE_HOST}
 
 
 ##################################################################
@@ -52,6 +56,19 @@ services:
 
   inx-dashboard:
     labels:
-      - "traefik.http.routers.hornet-dashboard.rule=Host(`${HORNET_HOST}`) && (Path(`/dashboard`) || PathPrefix(`/dashboard/`))"
+      - "traefik.http.routers.hornet-dashboard.rule=Host(`${NODE_HOST}`) && (Path(`/dashboard`) || PathPrefix(`/dashboard/`))"
       - "traefik.http.routers.hornet-dashboard.entrypoints=websecure"
       - "traefik.http.routers.hornet-dashboard.tls=true"
+
+##################################################################
+#  WASP                                                          #
+##################################################################
+
+  wasp:
+    labels:
+      - "traefik.http.routers.wasp-api.rule=Host(`${NODE_HOST}`) && (Path(`/wasp/api`) || PathPrefix(`/wasp/api/`))"
+      - "traefik.http.routers.wasp-api.entrypoints=websecure"
+      - "traefik.http.routers.wasp-api.tls=true"
+      - "traefik.http.routers.wasp-dashboard.rule=Host(`${NODE_HOST}`) && (Path(`/wasp/dashboard`) || PathPrefix(`/wasp/dashboard/`))"
+      - "traefik.http.routers.wasp-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.wasp-dashboard.tls=true"
