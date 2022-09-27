@@ -27,7 +27,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hornet.service=hornet"
-      - "traefik.http.routers.hornet.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.hornet.rule=Host(`${NODE_HOST:-localhost}`)"
       - "traefik.http.routers.hornet.entrypoints=web"
       - "traefik.http.services.hornet.loadbalancer.server.port=14265"
       - "traefik.http.routers.hornet.middlewares=redirect-dashboard"
@@ -120,12 +120,13 @@ services:
     user: "65532"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Path(`/grafana`) || PathPrefix(`/grafana/`)"
+      - "traefik.http.routers.grafana.rule=Host(`${NODE_HOST:-localhost}`) && (Path(`/grafana`) || PathPrefix(`/grafana/`))"
       - "traefik.http.routers.grafana.entrypoints=web"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
     environment:
       - GF_SERVER_ROOT_URL=/grafana
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_SERVER_DOMAIN=${NODE_HOST:-localhost}
     volumes:
       - ./data/grafana:/var/lib/grafana
       - ./assets/grafana/:/etc/grafana/provisioning/
@@ -228,7 +229,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hornet-dashboard.service=hornet-dashboard"
-      - "traefik.http.routers.hornet-dashboard.rule=Path(`/dashboard`) || PathPrefix(`/dashboard/`)"
+      - "traefik.http.routers.hornet-dashboard.rule=Host(`${NODE_HOST:-localhost}`) && (Path(`/dashboard`) || PathPrefix(`/dashboard/`))"
       - "traefik.http.routers.hornet-dashboard.entrypoints=web"
       - "traefik.http.services.hornet-dashboard.loadbalancer.server.port=8081"
     volumes:
@@ -260,13 +261,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.wasp-api.service=wasp-api"
-      - "traefik.http.routers.wasp-api.rule=Path(`/wasp/api`) || PathPrefix(`/wasp/api/`)"
+      - "traefik.http.routers.wasp-api.rule=Host(`${NODE_HOST:-localhost}`) && (Path(`/wasp/api`) || PathPrefix(`/wasp/api/`))"
       - "traefik.http.routers.wasp-api.entrypoints=web"
       - "traefik.http.services.wasp-api.loadbalancer.server.port=9090"
       - "traefik.http.routers.wasp-api.middlewares=rewrite-wasp-api"
       - "traefik.http.middlewares.rewrite-wasp-api.stripprefix.prefixes=/wasp/api"
       - "traefik.http.routers.wasp-dashboard.service=wasp-dashboard"
-      - "traefik.http.routers.wasp-dashboard.rule=Path(`/wasp/dashboard`) || PathPrefix(`/wasp/dashboard/`)"
+      - "traefik.http.routers.wasp-dashboard.rule=Host(`${NODE_HOST:-localhost}`) && (Path(`/wasp/dashboard`) || PathPrefix(`/wasp/dashboard/`))"
       - "traefik.http.routers.wasp-dashboard.entrypoints=web"
       - "traefik.http.services.wasp-dashboard.loadbalancer.server.port=7000"
       - "traefik.http.routers.wasp-dashboard.middlewares=rewrite-wasp-dashboard"
