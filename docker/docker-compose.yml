@@ -15,7 +15,8 @@ services:
         hard: 16384
     stop_grace_period: 5m
     depends_on:
-      - traefik
+      traefik:
+        condition: service_started
     ports:
       - "15600:15600/tcp"
       - "14626:14626/udp"
@@ -132,7 +133,8 @@ services:
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
-      - hornet
+      hornet:
+        condition: service_healthy
     volumes:
       - ./data:/app/database
     command:
@@ -148,7 +150,8 @@ services:
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
-      - hornet
+      hornet:
+        condition: service_healthy
     command:
       - "--inx.address=hornet:9029"
       - "--mqtt.websocket.bindAddress=inx-mqtt:1888"
@@ -161,7 +164,8 @@ services:
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
-      - hornet
+      hornet:
+        condition: service_healthy
     ulimits:
       nofile:
         soft: 16384
@@ -179,8 +183,10 @@ services:
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
-      - hornet
-      - inx-indexer
+      hornet:
+        condition: service_healthy
+      inx-indexer:
+        condition: service_started
     command:
       - "--inx.address=hornet:9029"
       - "--restAPI.bindAddress=inx-spammer:9092"
@@ -193,7 +199,8 @@ services:
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
-      - hornet
+      hornet:
+        condition: service_healthy
     command:
       - "--inx.address=hornet:9029"
       - "--restAPI.bindAddress=inx-poi:9687"
@@ -204,8 +211,10 @@ services:
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
-      - hornet
-      - inx-indexer
+      hornet:
+        condition: service_healthy
+      inx-indexer:
+        condition: service_started
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hornet-dashboard.service=hornet-dashboard"
