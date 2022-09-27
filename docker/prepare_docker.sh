@@ -14,6 +14,9 @@ if [[ "$OSTYPE" != "darwin"* && "$EUID" -ne 0 ]]; then
   exit
 fi
 
+# Pull latest images
+docker compose pull
+
 # Prepare db directory
 mkdir -p data
 mkdir -p data/grafana
