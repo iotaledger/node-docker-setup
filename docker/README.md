@@ -172,7 +172,7 @@ docker compose down
 
 ### Tools
 
-To access the tools provided inside HORNET you can use
+To access the tools provided inside HORNET you can use:
 ```sh
 docker compose run hornet tool <tool-name>
 ```

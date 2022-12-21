@@ -250,7 +250,7 @@ services:
 
   wasp:
     container_name: wasp
-    image: iotaledger/wasp:latest
+    image: iotaledger/wasp:0.4-alpha
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
@@ -278,15 +278,19 @@ services:
     volumes:
       - ./data/wasp:/app/waspdb
     command:
-      - "--inx.address=hornet:9029"
       - "--logger.level=info"
-      - "--database.directory=/app/waspdb"
+      - "--inx.address=hornet:9029"
+      - "--db.chainState.path=/app/waspdb/chains/data"
+      - "--p2p.identity.filePath=/app/waspdb/identity/identity.key"
+      - "--p2p.db.path=/app/waspdb/p2pstore"
+      - "--registries.chains.filePath=/app/waspdb/chains/chain_registry.json"
+      - "--registries.dkShares.path=/app/waspdb/dkshares"
+      - "--registries.trustedPeers.filePath=/app/waspdb/trusted_peers.json"
+      - "--registries.consensusState.path=/app/waspdb/chains/consensus"
+      - "--prometheus.bindAddress=wasp:9312"
       - "--webapi.bindAddress=wasp:9090"
       - "--webapi.auth.scheme=none"
-      - "--nanomsg.enabled=true"
       - "--dashboard.bindAddress=wasp:7000"
       - "--dashboard.auth.scheme=basic"
-      - "--metrics.enabled=false"
-      - "--metrics.bindAddress=wasp:9312"
     profiles:
       - wasp
