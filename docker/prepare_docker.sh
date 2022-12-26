@@ -15,7 +15,7 @@ if [[ "$OSTYPE" != "darwin"* && "$EUID" -ne 0 ]]; then
 fi
 
 # Pull latest images
-docker compose pull
+docker-compose pull
 
 # Prepare db directory
 mkdir -p data
