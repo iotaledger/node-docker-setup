@@ -277,6 +277,7 @@ services:
       - "5550:5550/tcp" # Nano MSG
     volumes:
       - ./data/wasp:/app/waspdb
+      - ./data/wasp-cli/wasp-cli.json:/app/wasp-cli.json
     command:
       - "--logger.level=info"
       - "--inx.address=hornet:9029"
