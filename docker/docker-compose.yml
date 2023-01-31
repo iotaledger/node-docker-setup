@@ -273,7 +273,8 @@ services:
       - "traefik.http.routers.wasp-dashboard.middlewares=rewrite-wasp-dashboard"
       - "traefik.http.middlewares.rewrite-wasp-dashboard.stripprefix.prefixes=/wasp/dashboard"
     ports:
-      - "4000:4000" # Peering
+      - "4000:4000/tcp" # Peering
+      - "4000:4000/udp" # Peering Quic
       - "5550:5550/tcp" # Nano MSG
     volumes:
       - ./data/wasp:/app/waspdb
