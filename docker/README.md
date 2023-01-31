@@ -10,7 +10,7 @@ This setup lets you run an [IOTA Hornet node](https://wiki.iota.org/hornet/welco
   - `14626 UDP` - Used for HORNET autopeering.
   - `80 TCP` - Used for HTTP. _(can be changed, see below)_
   - `443 TCP` - Used for HTTPS. _(optional if not using HTTPS)_
-  - `4000 UDP` - Used for Wasp gossip. _(optional if not using Wasp)_
+  - `4000 TCP/UDP` - Used for Wasp gossip. _(optional if not using Wasp)_
   - `5550 TCP` - Used for Wasp nanomsg events. _(optional if not using Wasp)_
 
 ## Prepare
