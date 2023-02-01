@@ -23,9 +23,6 @@ mkdir -p data/grafana
 mkdir -p data/prometheus
 mkdir -p data/dashboard
 mkdir -p data/wasp
-mkdir -p data/wasp-cli
-touch data/wasp-cli/wasp-cli.json
-
 if [[ "$OSTYPE" != "darwin"* ]]; then
   chown -R 65532:65532 data
   chown 65532:65532 peering.json
