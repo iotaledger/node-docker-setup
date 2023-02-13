@@ -17,18 +17,30 @@ jobs:
         with:
           find: "__VERSION__"
           replace: ${{ github.ref_name }}
-          include: "docker/*"
           regex: false
 
-      - name: Create node-docker-setup.tar.gz
+      - name: Create node-docker-setup_chrysalis.tar.gz
         uses: ihiroky/archive-action@v1
         with:
-          root_dir: docker
-          file_path: node-docker-setup.tar.gz
+          root_dir: chrysalis
+          file_path: node-docker-setup_chrysalis.tar.gz
 
-      - name: Upload node-docker-setup.tar.gz file
+      - name: Create node-docker-setup_stardust.tar.gz
+        uses: ihiroky/archive-action@v1
+        with:
+          root_dir: stardust
+          file_path: node-docker-setup_stardust.tar.gz
+
+      - name: Upload node-docker-setup_chrysalis.tar.gz file
         uses: Shopify/upload-to-release@v1.0.1
         with:
-          name: node-docker-setup-${{ github.ref_name }}.tar.gz
-          path: node-docker-setup.tar.gz
+          name: node-docker-setup_chrysalis-${{ github.ref_name }}.tar.gz
+          path: node-docker-setup_chrysalis.tar.gz
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload node-docker-setup_stardust.tar.gz file
+        uses: Shopify/upload-to-release@v1.0.1
+        with:
+          name: node-docker-setup_stardust-${{ github.ref_name }}.tar.gz
+          path: node-docker-setup_stardust.tar.gz
           repo-token: ${{ secrets.GITHUB_TOKEN }}
