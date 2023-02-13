@@ -1,0 +1,42 @@
+{
+  "restAPI": {
+    "publicRoutes": [
+      "/health",
+      "/mqtt",
+      "/api/routes",
+      "/api/v1/info",
+      "/api/v1/tips",
+      "/api/v1/messages*",
+      "/api/v1/transactions*",
+      "/api/v1/milestones*",
+      "/api/v1/outputs*",
+      "/api/v1/addresses*",
+      "/api/v1/treasury",
+      "/api/v1/receipts*",
+      "/api/plugins/participation/events*",
+      "/api/plugins/participation/outputs*",
+      "/api/plugins/participation/addresses*"
+    ],
+    "protectedRoutes": [
+      "/api/v1/*",
+      "/api/plugins/*"
+    ],
+    "powEnabled": false
+  },
+  "pruning": {
+    "size": {
+      "targetSize": "30GB"
+    }
+  },
+  "node": {
+    "alias": "HORNET mainnet node",
+    "disablePlugins": [],
+    "enablePlugins": [
+      "Autopeering",
+      "Participation",
+      "Prometheus",
+      "Spammer",
+      "POI"
+    ]
+  }
+}
