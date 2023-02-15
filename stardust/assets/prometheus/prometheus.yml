@@ -41,6 +41,13 @@ scrape_configs:
       - targets:
           - 'inx-dashboard:9312'
   
+  - job_name: wasp
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'wasp:9312'
+  
   - job_name: traefik
     scrape_interval: 5s
     scrape_timeout: 5s
