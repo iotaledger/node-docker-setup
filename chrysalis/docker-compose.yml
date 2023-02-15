@@ -51,6 +51,7 @@ services:
       - "--p2p.db.path=data/p2pstore"
       - "--snapshots.fullPath=data/snapshots/full_snapshot.bin"
       - "--snapshots.deltaPath=data/snapshots/delta_snapshot.bin"
+      - "--dashboard.bindAddress=hornet:8081"
       - "--prometheus.bindAddress=hornet:9311"
       - "--dashboard.auth.username=${DASHBOARD_USERNAME:-admin}"
       - "--dashboard.auth.passwordHash=${DASHBOARD_PASSWORD:-0000000000000000000000000000000000000000000000000000000000000000}"
