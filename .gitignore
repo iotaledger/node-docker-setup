@@ -1,2 +1,4 @@
 .DS_Store
-docker/data
+chrysalis/data
+stardust/data
+.env

@@ -268,12 +268,6 @@ services:
       - "traefik.http.services.wasp-api.loadbalancer.server.port=9090"
       - "traefik.http.routers.wasp-api.middlewares=rewrite-wasp-api"
       - "traefik.http.middlewares.rewrite-wasp-api.stripprefix.prefixes=/wasp/api"
-      - "traefik.http.routers.wasp-dashboard.service=wasp-dashboard"
-      - "traefik.http.routers.wasp-dashboard.rule=Host(`${NODE_HOST:-localhost}`) && (Path(`/wasp/dashboard`) || PathPrefix(`/wasp/dashboard/`))"
-      - "traefik.http.routers.wasp-dashboard.entrypoints=web"
-      - "traefik.http.services.wasp-dashboard.loadbalancer.server.port=7000"
-      - "traefik.http.routers.wasp-dashboard.middlewares=rewrite-wasp-dashboard"
-      - "traefik.http.middlewares.rewrite-wasp-dashboard.stripprefix.prefixes=/wasp/dashboard"
     ports:
       - "4000:4000/tcp" # Peering
       - "4000:4000/udp" # Peering Quic
@@ -281,7 +275,7 @@ services:
     volumes:
       - ./data/wasp:/app/waspdb
     command:
-      - "--logger.level=info"
+      - "--logger.level=debug"
       - "--inx.address=hornet:9029"
       - "--db.chainState.path=/app/waspdb/chains/data"
       - "--p2p.identity.filePath=/app/waspdb/identity/identity.key"
@@ -295,5 +289,27 @@ services:
       - "--webapi.auth.scheme=none"
       - "--dashboard.bindAddress=wasp:7000"
       - "--dashboard.auth.scheme=basic"
+    profiles:
+      - wasp
+
+  wasp-dashboard:
+    container_name: wasp-dashboard
+    image: iotaledger/wasp-dashboard:latest
+    stop_grace_period: 5m
+    restart: unless-stopped
+    depends_on:
+      wasp:
+        condition: service_started
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wasp-dashboard.service=wasp-dashboard"
+      - "traefik.http.routers.wasp-dashboard.rule=Host(`${NODE_HOST:-localhost}`) && (Path(`/wasp/dashboard`) || PathPrefix(`/wasp/dashboard/`))"
+      - "traefik.http.routers.wasp-dashboard.entrypoints=web"
+      - "traefik.http.services.wasp-dashboard.loadbalancer.server.port=80"
+      - "traefik.http.routers.wasp-dashboard.middlewares=rewrite-wasp-dashboard"
+      - "traefik.http.middlewares.rewrite-wasp-dashboard.stripprefix.prefixes=/wasp/dashboard"
+    environment:
+      - WASP_API_URL=${NODE_HOST:-http://localhost}/wasp/api
+      - L1_API_URL=${NODE_HOST:-http://localhost}
     profiles:
       - wasp

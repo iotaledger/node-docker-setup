@@ -63,5 +63,8 @@ services:
     labels:
       - "traefik.http.routers.wasp-api.entrypoints=websecure"
       - "traefik.http.routers.wasp-api.tls=true"
+
+  wasp-dashboard:
+    labels:
       - "traefik.http.routers.wasp-dashboard.entrypoints=websecure"
       - "traefik.http.routers.wasp-dashboard.tls=true"
