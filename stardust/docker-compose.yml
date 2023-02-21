@@ -287,8 +287,6 @@ services:
       - "--prometheus.bindAddress=wasp:9312"
       - "--webapi.bindAddress=wasp:9090"
       - "--webapi.auth.scheme=none"
-      - "--dashboard.bindAddress=wasp:7000"
-      - "--dashboard.auth.scheme=basic"
     profiles:
       - wasp
 
