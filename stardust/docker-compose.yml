@@ -284,6 +284,7 @@ services:
       - "--registries.dkShares.path=/app/waspdb/dkshares"
       - "--registries.trustedPeers.filePath=/app/waspdb/trusted_peers.json"
       - "--registries.consensusState.path=/app/waspdb/chains/consensus"
+      - "--wal.path=/app/waspdb/wal"
       - "--prometheus.bindAddress=wasp:9312"
       - "--webapi.bindAddress=wasp:9090"
       - "--webapi.auth.scheme=none"
