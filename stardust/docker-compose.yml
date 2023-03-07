@@ -306,7 +306,7 @@ services:
       - "traefik.http.routers.wasp-dashboard.middlewares=rewrite-wasp-dashboard"
       - "traefik.http.middlewares.rewrite-wasp-dashboard.stripprefix.prefixes=/wasp/dashboard"
     environment:
-      - WASP_API_URL=${NODE_HOST:-http://localhost}/wasp/api
-      - L1_API_URL=${NODE_HOST:-http://localhost}
+      - WASP_API_URL=http://${NODE_HOST:-localhost}/wasp/api
+      - L1_API_URL=http://${NODE_HOST:-localhost}
     profiles:
       - wasp
