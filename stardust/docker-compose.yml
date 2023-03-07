@@ -270,8 +270,6 @@ services:
       - "traefik.http.middlewares.rewrite-wasp-api.stripprefix.prefixes=/wasp/api"
     ports:
       - "4000:4000/tcp" # Peering
-      - "4000:4000/udp" # Peering Quic
-      - "5550:5550/tcp" # Nano MSG
     volumes:
       - ./data/wasp:/app/waspdb
     command:
