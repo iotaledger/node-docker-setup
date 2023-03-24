@@ -25,7 +25,6 @@ mkdir -p data/dashboard
 mkdir -p data/wasp
 mkdir -p data/chronicle/mongodb
 mkdir -p data/chronicle/influxdb
-mkdir -p data/chronicle/grafana
 if [[ "$OSTYPE" != "darwin"* ]]; then
   chown -R 65532:65532 data
   chown 65532:65532 peering.json
