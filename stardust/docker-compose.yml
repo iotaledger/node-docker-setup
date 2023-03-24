@@ -309,3 +309,86 @@ services:
       - L1_API_URL=http://${NODE_HOST:-localhost}
     profiles:
       - wasp
+
+##################################################################
+#  CHRONICLE                                                          #
+##################################################################
+
+  chronicle:
+    container_name: chronicle
+    image: ghcr.io/iotaledger/inx-chronicle:1.0.0-rc.1
+    depends_on:
+      hornet:
+        condition: service_healthy
+      chronicle-mongodb:
+        condition: service_started
+      chronicle-influxdb:
+        condition: service_started
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.chronicle-api.service=chronicle-api"
+      - "traefik.http.routers.chronicle-api.rule=Host(`${NODE_HOST:-localhost}`) && (Path(`/chronicle/api`) || PathPrefix(`/chronicle/api/`))"
+      - "traefik.http.routers.chronicle-api.entrypoints=web"
+      - "traefik.http.services.chronicle-api.loadbalancer.server.port=8042"
+      - "traefik.http.routers.chronicle-api.middlewares=rewrite-chronicle-api"
+      - "traefik.http.middlewares.rewrite-chronicle-api.stripprefix.prefixes=/chronicle/api"
+    command:
+      - "--mongodb-conn-str=${MONGODB_CONN_STR}"
+      - "--influxdb-url=http://influx:8086"
+      - "--influxdb-username=${INFLUXDB_USERNAME}"
+      - "--influxdb-password=${INFLUXDB_PASSWORD}"
+      - "--inx-url=http://hornet:9029"
+      - "--jwt-password=${JWT_PASSWORD}"
+      - "--jwt-salt=${JWT_SALT}"
+    profiles:
+      - chronicle
+
+  chronicle-mongodb:
+    container_name: mongo
+    image: mongo:latest
+    # Warning: We don't keep logs to make development simpler
+    command: ["--quiet", "--logpath", "/dev/null"]
+    volumes:
+      - ./data/chronicle/mongodb:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+    ports:
+      - 27017:27017
+    profiles:
+      - chronicle
+
+  chronicle-influxdb:
+    container_name: influx
+    image: influxdb:1.8
+    volumes:
+      - ./data/chronicle/influxdb:/var/lib/influxdb
+      - ./assets/influxdb/init.iql:/docker-entrypoint-initdb.d/influx_init.iql
+    environment:
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}
+      - INFLUXDB_HTTP_AUTH_ENABLED=true
+    ports:
+      - 8086:8086
+    profiles:
+      - chronicle
+
+  chronicle-mongodb-exporter:
+    container_name: mongodb-exporter
+    image: percona/mongodb_exporter:0.34
+    depends_on:
+      - chronicle-mongo
+    restart: unless-stopped
+    user: "65532"
+    ports:
+      - 9216:9261
+    command:
+      - "--mongodb.uri=mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongo:27017"
+      - "--mongodb.direct-connect=true"
+      - "--web.listen-address=:9216"
+      - "--log.level=info"
+      - "--discovering-mode"
+      - "--collect-all"
+    profiles:
+      - chronicle
+      - monitoring

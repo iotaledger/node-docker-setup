@@ -54,3 +54,10 @@ scrape_configs:
     static_configs:
       - targets:
           - 'traefik:8080'
+
+  - job_name: chronicle-mongodb
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'mongodb-exporter:9216'
