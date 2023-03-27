@@ -63,7 +63,17 @@ To create this directory with correct permissions run the contained script:
 ./prepare_docker.sh
 ```
 
-### 4. Set dashboard credentials
+### 4. Select the target network
+
+By default, the `node-docker-setup` joins the `Shimmer` network.
+
+If you want to switch to the `testnet`, create a file named `.env` if you did not create it already and add the following line:
+
+```
+HORNET_CONFIG_FILE=config_testnet.json
+```
+
+### 5. Set dashboard credentials
 
 To access your HORNET dashboard, a set of credentials need to be configured.
 Run the following command to generate a password hash and salt for the dashboard:
@@ -87,7 +97,7 @@ If you want to change the default `admin` username, you can add this line to you
 DASHBOARD_USERNAME=someotherusername
 ```
 
-### 5. Enable additional monitoring
+### 6. Enable additional monitoring
 
 To enable additional monitoring (cAdvisor, Prometheus, Grafana), the docker compose profile needs to be configured.
 Create a file named `.env` if you did not create it already and add the following line:
@@ -96,7 +106,7 @@ Create a file named `.env` if you did not create it already and add the followin
 COMPOSE_PROFILES=monitoring
 ```
 
-### 6. Enable Wasp node
+### 7. Enable Wasp node
 
 To also run a Wasp node, the docker compose profile needs to be configured.
 Create a file named `.env` if you did not create it already and add the following line:

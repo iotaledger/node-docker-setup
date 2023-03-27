@@ -38,7 +38,7 @@ services:
     cap_drop:
       - ALL
     volumes:
-      - ./config.json:/app/config.json:ro
+      - ./${HORNET_CONFIG_FILE:-config.json}:/app/config.json:ro
       - ./peering.json:/app/peering.json
       - ./data:/app/data
     command:
@@ -283,6 +283,7 @@ services:
       - "--registries.trustedPeers.filePath=/app/waspdb/trusted_peers.json"
       - "--registries.consensusState.path=/app/waspdb/chains/consensus"
       - "--wal.path=/app/waspdb/wal"
+      - "--prometheus.enabled=true"
       - "--prometheus.bindAddress=wasp:9312"
       - "--webapi.bindAddress=wasp:9090"
     profiles:
