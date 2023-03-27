@@ -224,9 +224,7 @@ services:
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
-      hornet:
-        condition: service_healthy
-      inx-indexer:
+      traefik:
         condition: service_started
     labels:
       - "traefik.enable=true"
@@ -285,7 +283,6 @@ services:
       - "--wal.path=/app/waspdb/wal"
       - "--prometheus.enabled=true"
       - "--prometheus.bindAddress=wasp:9312"
-      - "--webapi.bindAddress=wasp:9090"
     profiles:
       - wasp
 
@@ -295,7 +292,7 @@ services:
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
-      wasp:
+      traefik:
         condition: service_started
     labels:
       - "traefik.enable=true"
