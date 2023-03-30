@@ -272,6 +272,8 @@ services:
       - ./data/wasp:/app/waspdb
     command:
       - "--logger.level=debug"
+      - "--logger.outputPaths=\"stdout\",\"/app/waspdb/wasp.log\""
+      - "--logger.encodingConfig.timeEncoder=rfc3339nano"
       - "--inx.address=hornet:9029"
       - "--db.chainState.path=/app/waspdb/chains/data"
       - "--p2p.identity.filePath=/app/waspdb/identity/identity.key"
