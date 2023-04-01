@@ -120,6 +120,32 @@ If you already enabled the `monitoring` profile, modify the profiles:
 COMPOSE_PROFILES=monitoring,wasp
 ```
 
+### 7. Enable Chronicle plugin
+
+To also run Chronicle, the docker compose profile needs to be configured.
+Create a file named `.env` if you did not create it already and add/change the following lines:
+
+```
+COMPOSE_PROFILES=chronicle
+```
+
+If you already enabled the `monitoring` profile, modify the profiles:
+```
+COMPOSE_PROFILES=monitoring,chronicle
+```
+
+Furthermore you need to configure the following credentials:
+```
+MONGODB_USERNAME=root
+MONGODB_PASSWORD=root
+MONGODB_CONN_STR=mongodb://root:root@mongo:27017
+INFLUXDB_URL=http://influx:8086
+INFLUXDB_USERNAME=admin
+INFLUXDB_PASSWORD=password
+JWT_PASSWORD=password
+JWT_SALT=saltines
+```
+
 
 ## Run
 
