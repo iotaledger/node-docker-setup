@@ -68,7 +68,7 @@ By default, the `node-docker-setup` joins the `IOTA Mainnet`.
 If you want to switch to the `testnet`, create a file named `.env` if you did not create it already and add the following line:
 
 ```
-HORNET_CONFIG_FILE=config_testnet.json
+HORNET_CONFIG_FILE=config_devnet.json
 ```
 
 ### 5. Set dashboard credentials
