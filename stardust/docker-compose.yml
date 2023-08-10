@@ -60,7 +60,7 @@ services:
 
   traefik:
     container_name: traefik
-    image: traefik:v2.9
+    image: traefik:v2.10
     command:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"

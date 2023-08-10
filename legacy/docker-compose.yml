@@ -7,12 +7,12 @@ version: '3'
 services:
 
 ##################################################################
-#  HORNET - Chysalis                                             #
+#  HORNET - Legacy                                               #
 ##################################################################
 
   hornet:
     container_name: hornet
-    image: iotaledger/hornet:1
+    image: iotaledger/hornet:0.5
     ulimits:
       nofile:
         soft: 16384
@@ -22,22 +22,22 @@ services:
       traefik:
         condition: service_started
     ports:
-      - "15600:15600/tcp"
-      - "14626:14626/udp"
+      - "15601:15601/tcp"
+      - "14627:14627/udp"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hornet.service=hornet"
       - "traefik.http.routers.hornet.rule=Host(`${NODE_HOST:-localhost}`)"
       - "traefik.http.routers.hornet.entrypoints=web"
-      - "traefik.http.services.hornet.loadbalancer.server.port=14265"
+      - "traefik.http.services.hornet.loadbalancer.server.port=14266"
       - "traefik.http.routers.hornet.middlewares=redirect-dashboard"
-      - "traefik.http.middlewares.redirect-dashboard.redirectregex.regex=^(https?://[^/]+)/?$$"
-      - "traefik.http.middlewares.redirect-dashboard.redirectregex.replacement=$$1/dashboard/"
+      - "traefik.http.middlewares.redirect-dashboard.redirectregex.regex=^(https?://)([^/]+)/?$$"
+      - "traefik.http.middlewares.redirect-dashboard.redirectregex.replacement=$${1}dashboard.$${2}"
       - "traefik.http.middlewares.redirect-dashboard.redirectregex.permanent=true"
       - "traefik.http.routers.hornet-dashboard.service=hornet-dashboard"
-      - "traefik.http.routers.hornet-dashboard.rule=Host(`${NODE_HOST:-localhost}`) && (Path(`/dashboard`) || PathPrefix(`/dashboard/`))"
+      - "traefik.http.routers.hornet-dashboard.rule=Host(`dashboard.${NODE_HOST:-localhost}`)"
       - "traefik.http.routers.hornet-dashboard.entrypoints=web"
-      - "traefik.http.services.hornet-dashboard.loadbalancer.server.port=8081"
+      - "traefik.http.services.hornet-dashboard.loadbalancer.server.port=8082"
     cap_drop:
       - ALL
     volumes:
@@ -45,18 +45,23 @@ services:
       - ./peering.json:/app/peering.json
       - ./data:/app/data
     command:
-      - "-c"
-      - "config.json"
+      - "-c=config.json"
+      - "--node.disablePlugins=Profiling"
+      - "--node.enablePlugins=Prometheus"
       - "--db.path=data/database"
-      - "--snapshots.fullPath=data/snapshots/full_snapshot.bin"
-      - "--snapshots.deltaPath=data/snapshots/delta_snapshot.bin"
-      - "--p2p.db.path=data/p2pstore"
-      - "--p2p.bindMultiAddresses=/ip4/0.0.0.0/tcp/15600,/ip6/::/tcp/15600"
-      - "--dashboard.bindAddress=hornet:8081"
-      - "--dashboard.auth.username=${DASHBOARD_USERNAME:-admin}"
-      - "--dashboard.auth.passwordHash=${DASHBOARD_PASSWORD:-0000000000000000000000000000000000000000000000000000000000000000}"
-      - "--dashboard.auth.passwordSalt=${DASHBOARD_SALT:-0000000000000000000000000000000000000000000000000000000000000000}"
-      - "--prometheus.bindAddress=hornet:9311"
+      - "--snapshots.local.path=data/snapshots/export.bin"
+      - "--snapshots.local.downloadURLs=https://dbfiles.iota.org/legacy-mainnet/hornet/latest-export.bin"
+      - "--network.gossip.bindAddress=0.0.0.0:15601"
+      - "--network.autopeering.bindAddress=0.0.0.0:14627"
+      - "--network.autopeering.entryNodes=EagUoEdsY4QUTLAZa8xdFgYEPfrExwdY9MS2k9ugJ5Pi@entry-legacy.iotaledger.net:14626"
+      - "--httpAPI.bindAddress=0.0.0.0:14266"
+      - "--httpAPI.jwtAuth.privateKeyPath=data/jwt/private.key"
+      - "--dashboard.bindAddress=hornet:8082"
+      - "--dashboard.basicAuth.enabled=true"
+      - "--dashboard.basicAuth.username=${DASHBOARD_USERNAME:-admin}"
+      - "--dashboard.basicauth.passwordhash=${DASHBOARD_PASSWORD:-0000000000000000000000000000000000000000000000000000000000000000}"
+      - "--dashboard.basicauth.passwordsalt=${DASHBOARD_SALT:-0000000000000000000000000000000000000000000000000000000000000000}"
+      - "--prometheus.bindAddress=hornet:9312"
 
 ##################################################################
 #  Reverse Proxy and SSL                                         #

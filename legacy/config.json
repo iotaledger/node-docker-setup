@@ -1,0 +1,43 @@
+{
+  "httpAPI": { 
+    "publicRoutes": [
+      "/",
+      "/healthz",
+      "/api/core/v0/info",
+      "/api/core/v0/milestones*",
+      "/api/core/v0/transactions*",
+      "/api/core/v0/addresses*",
+      "/api/core/v0/ledger/diff/by-index*",
+      "/api/core/v0/ledger/diff-extended/by-index*"
+    ],
+    "protectedRoutes": [
+      "/api/*"
+    ],
+    "publicRPCEndpoints": [
+      "getNodeInfo",
+      "getBalances",
+      "checkConsistency",
+      "getTipInfo",
+      "getTransactionsToApprove",
+      "getInclusionStates",
+      "getNodeAPIConfiguration",
+      "wereAddressesSpentFrom",
+      "broadcastTransactions",
+      "findTransactions",
+      "storeTransactions",
+      "getTrytes",
+      "getWhiteFlagConfirmation"
+    ]
+  },
+  "snapshots": { 
+    "pruning": {
+      "enabled": true,
+      "delay": 60480
+    }
+  },
+  "prometheus": {
+    "goMetrics": true,
+    "processMetrics": true,
+    "promhttpMetrics": true
+  }
+}
