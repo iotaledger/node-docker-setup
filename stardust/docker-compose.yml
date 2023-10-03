@@ -12,7 +12,7 @@ services:
 
   hornet:
     container_name: hornet
-    image: iotaledger/hornet:2.0-rc
+    image: iotaledger/hornet:2.0
     ulimits:
       nofile:
         soft: 16384
@@ -142,7 +142,7 @@ services:
 
   inx-indexer:
     container_name: inx-indexer
-    image: iotaledger/inx-indexer:1.0-rc
+    image: iotaledger/inx-indexer:1.0
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
@@ -159,7 +159,7 @@ services:
 
   inx-mqtt:
     container_name: inx-mqtt
-    image: iotaledger/inx-mqtt:1.0-rc
+    image: iotaledger/inx-mqtt:1.0
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
@@ -173,7 +173,7 @@ services:
 
   inx-participation:
     container_name: inx-participation
-    image: iotaledger/inx-participation:1.0-rc
+    image: iotaledger/inx-participation:1.0
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
@@ -192,7 +192,7 @@ services:
 
   inx-spammer:
     container_name: inx-spammer
-    image: iotaledger/inx-spammer:1.0-rc
+    image: iotaledger/inx-spammer:1.0
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
@@ -208,7 +208,7 @@ services:
 
   inx-poi:
     container_name: inx-poi
-    image: iotaledger/inx-poi:1.0-rc
+    image: iotaledger/inx-poi:1.0
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
@@ -220,7 +220,7 @@ services:
 
   inx-dashboard:
     container_name: inx-dashboard
-    image: iotaledger/inx-dashboard:1.0-rc
+    image: iotaledger/inx-dashboard:1.0
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
@@ -250,7 +250,7 @@ services:
 
   wasp:
     container_name: wasp
-    image: iotaledger/wasp:0.6-alpha
+    image: iotaledger/wasp:1.0-rc
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
