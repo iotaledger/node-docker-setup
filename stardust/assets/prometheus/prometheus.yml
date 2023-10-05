@@ -41,6 +41,20 @@ scrape_configs:
       - targets:
           - 'inx-dashboard:9312'
   
+  - job_name: inx-api-core-v0
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'inx-api-core-v0:9312'
+  
+  - job_name: inx-api-core-v1
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'inx-api-core-v1:9312'
+  
   - job_name: wasp
     scrape_interval: 5s
     scrape_timeout: 5s

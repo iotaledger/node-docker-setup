@@ -245,6 +245,61 @@ services:
       - "--prometheus.bindAddress=inx-dashboard:9312"
 
 ##################################################################
+#  Historic Data                                                 #
+##################################################################
+
+  inx-api-core-v0:
+    container_name: inx-api-core-v0
+    image: iotaledger/inx-api-core-v0:1.0
+    stop_grace_period: 5m
+    restart: unless-stopped
+    depends_on:
+      hornet:
+        condition: service_healthy
+    ulimits:
+      nofile:
+        soft: 16384
+        hard: 16384
+    volumes:
+      - ./data/database_legacy:/app/data/database
+    command:
+      - "--db.tangle.path=data/database/tangle"
+      - "--db.snapshot.path=data/database/snapshot"
+      - "--db.spent.path=data/database/spent"
+      - "--inx.enabled=true"
+      - "--inx.address=hornet:9029"
+      - "--restAPI.bindAddress=inx-api-core-v0:9093"
+      - "--prometheus.enabled=true"
+      - "--prometheus.bindAddress=inx-api-core-v0:9312"
+    profiles:
+      - history-legacy
+
+  inx-api-core-v1:
+    container_name: inx-api-core-v1
+    image: iotaledger/inx-api-core-v1:1.0
+    stop_grace_period: 5m
+    restart: unless-stopped
+    depends_on:
+      hornet:
+        condition: service_healthy
+    ulimits:
+      nofile:
+        soft: 16384
+        hard: 16384
+    volumes:
+      - ./data/database_chrysalis:/app/data/database
+    command:
+      - "--db.tangle.path=data/database/tangle"
+      - "--db.utxo.path=data/database/utxo"
+      - "--inx.enabled=true"      
+      - "--inx.address=hornet:9029"
+      - "--restAPI.bindAddress=inx-api-core-v1:9094"
+      - "--prometheus.enabled=true"
+      - "--prometheus.bindAddress=inx-api-core-v1:9312"
+    profiles:
+      - history-chrysalis
+
+##################################################################
 #  WASP                                                          #
 ##################################################################
 
