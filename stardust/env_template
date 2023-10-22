@@ -8,6 +8,7 @@
 #   nano .env 
 #
 # The .env file is your personal configuration and is used by Docker.
+# Uncomment and edit the lines to fit your needs
 
 #
 # HINT: You either have to choose a HTTP or a HTTPS setup. 
