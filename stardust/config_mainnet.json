@@ -74,7 +74,9 @@
       "enabled": true,
       "entryNodes": [
         "/dns/entry-hornet-0.h.stardust-mainnet.iotaledger.net/udp/14626/autopeering/K4cHM64KxzYJ5ZB2a9P3stJUHjvQDh4bzhCw49xDowi",
-        "/dns/entry-hornet-1.h.stardust-mainnet.iotaledger.net/udp/14626/autopeering/8UbVu5MjRZH2c9fnEdpfPvd7qqDgrVFsNsvc933FuMTm"
+        "/dns/entry-hornet-1.h.stardust-mainnet.iotaledger.net/udp/14626/autopeering/8UbVu5MjRZH2c9fnEdpfPvd7qqDgrVFsNsvc933FuMTm",
+        "/dns/entry-0.iota-mainnet.tanglebay.com/udp/14626/autopeering/iot4By1FD4pFLrGJ6AAe7YEeSu9RbW9xnPUmxMdQenC",
+        "/dns/entry-1.iota-mainnet.tanglebay.com/udp/14626/autopeering/CATsx21mFVvQQPXeDineGs9DDeKvoBBQdzcmR6ffCkVA"
       ]
     }
   },
@@ -85,6 +87,10 @@
       {
         "full": "https://files.stardust-mainnet.iotaledger.net/snapshots/latest-full_snapshot.bin",
         "delta": "https://files.stardust-mainnet.iotaledger.net/snapshots/latest-delta_snapshot.bin"
+      },
+      {
+        "full": "https://cdn.tanglebay.com/snapshots/iota-mainnet/full_snapshot.bin",
+        "delta": "https://cdn.tanglebay.com/snapshots/iota-mainnet/delta_snapshot.bin"
       }
     ]
   }
