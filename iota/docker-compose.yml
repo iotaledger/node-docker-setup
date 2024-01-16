@@ -34,11 +34,10 @@ services:
       - "traefik.http.middlewares.redirect-dashboard.redirectregex.regex=^(https?://[^/]+)/?$$"
       - "traefik.http.middlewares.redirect-dashboard.redirectregex.replacement=$$1/dashboard/"
       - "traefik.http.middlewares.redirect-dashboard.redirectregex.permanent=true"
-
     cap_drop:
       - ALL
     volumes:
-      - ./${HORNET_CONFIG_FILE:-config_mainnet.json}:/app/config.json:ro
+      - ./${HORNET_CONFIG_FILE:-config.json}:/app/config.json:ro
       - ./peering.json:/app/peering.json
       - ./data:/app/data
     command:
