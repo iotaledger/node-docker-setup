@@ -1,5 +1,5 @@
 .DS_Store
-legacy/data
-chrysalis/data
-stardust/data
+iota/data
+shimmer/data
+testnet/data
 .env

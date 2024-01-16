@@ -39,14 +39,12 @@
 # You need to specify the domain name of your node to automatically get a valid SSL certificate via "letsencrypt.org" 
 #NODE_HOST=node.your-domain.com
 
-###################
-# network section #
-###################
+#######################
+# config file section #
+#######################
 
-# Choose the correct network by uncommenting one of the following lines.
-#HORNET_CONFIG_FILE=config_mainnet.json
-#HORNET_CONFIG_FILE=config_shimmer.json
-#HORNET_CONFIG_FILE=config_testnet.json
+# Overwrite the default config file by uncommenting the following line (default: config.json).
+#HORNET_CONFIG_FILE=config.json
 
 ####################
 # profiles section #
