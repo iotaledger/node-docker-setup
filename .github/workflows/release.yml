@@ -8,26 +8,33 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tag_prefix: ['iota', 'shimmer', 'testnet']
     steps:
       - name: Check out code into the Go module directory
+        if: startsWith(github.ref_name, matrix.tag_prefix)
         uses: actions/checkout@v3
 
       - name: Find and Replace VERSION
+        if: startsWith(github.ref_name, matrix.tag_prefix)
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "__VERSION__"
-          replace: ${{ github.ref_name }}
+          replace: ${{ matrix.tag_prefix }}-${{ github.ref_name }}
           regex: false
 
-      - name: Create node-docker-setup_stardust.tar.gz
+      - name: Create node-docker-setup_${{ matrix.tag_prefix }}.tar.gz
+        if: startsWith(github.ref_name, matrix.tag_prefix)
         uses: ihiroky/archive-action@v1
         with:
-          root_dir: stardust
-          file_path: node-docker-setup_stardust.tar.gz
+          root_dir: ${{ matrix.tag_prefix }}
+          file_path: node-docker-setup_${{ matrix.tag_prefix }}.tar.gz
 
-      - name: Upload node-docker-setup_stardust.tar.gz file
+      - name: Upload node-docker-setup_${{ matrix.tag_prefix }}.tar.gz file
+        if: startsWith(github.ref_name, matrix.tag_prefix)
         uses: Shopify/upload-to-release@v1.0.1
         with:
-          name: node-docker-setup_stardust-${{ github.ref_name }}.tar.gz
-          path: node-docker-setup_stardust.tar.gz
+          name: node-docker-setup_${{ matrix.tag_prefix }}-${{ github.ref_name }}.tar.gz
+          path: node-docker-setup_${{ matrix.tag_prefix }}.tar.gz
           repo-token: ${{ secrets.GITHUB_TOKEN }}
