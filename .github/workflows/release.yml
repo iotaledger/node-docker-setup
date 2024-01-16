@@ -14,14 +14,14 @@ jobs:
     steps:
       - name: Check out code into the Go module directory
         if: startsWith(github.ref_name, matrix.tag_prefix)
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Find and Replace VERSION
         if: startsWith(github.ref_name, matrix.tag_prefix)
-        uses: jacobtomlinson/gha-find-replace@v2
+        uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "__VERSION__"
-          replace: ${{ matrix.tag_prefix }}-${{ github.ref_name }}
+          replace: ${{ github.ref_name }}
           regex: false
 
       - name: Create node-docker-setup_${{ matrix.tag_prefix }}.tar.gz
@@ -33,8 +33,8 @@ jobs:
 
       - name: Upload node-docker-setup_${{ matrix.tag_prefix }}.tar.gz file
         if: startsWith(github.ref_name, matrix.tag_prefix)
-        uses: Shopify/upload-to-release@v1.0.1
+        uses: Shopify/upload-to-release@v2.0.0
         with:
-          name: node-docker-setup_${{ matrix.tag_prefix }}-${{ github.ref_name }}.tar.gz
+          name: node-docker-setup_${{ github.ref_name }}.tar.gz
           path: node-docker-setup_${{ matrix.tag_prefix }}.tar.gz
           repo-token: ${{ secrets.GITHUB_TOKEN }}
