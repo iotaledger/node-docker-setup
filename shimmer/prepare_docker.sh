@@ -25,6 +25,11 @@ mkdir -p data/dashboard
 mkdir -p data/database_legacy
 mkdir -p data/database_chrysalis
 mkdir -p data/wasp
+
+if [ ! -f data/wasp/users.json ]; then
+  echo "{}" >> data/wasp/users.json
+fi
+
 if [[ "$OSTYPE" != "darwin"* ]]; then
   chown -R 65532:65532 data
   chown 65532:65532 peering.json
