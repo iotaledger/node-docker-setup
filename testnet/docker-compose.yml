@@ -303,7 +303,7 @@ services:
 
   wasp:
     container_name: wasp
-    image: iotaledger/wasp:1.0-rc
+    image: iotaledger/wasp:1.0-alpha
     stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
