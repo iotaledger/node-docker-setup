@@ -3,12 +3,11 @@
 # https://github.com/iotaledger/node-docker-setup
 #
 
-version: '3'
+version: "3"
 services:
-
-##################################################################
-#  HORNET                                                        #
-##################################################################
+  ##################################################################
+  #  HORNET                                                        #
+  ##################################################################
 
   hornet:
     container_name: hornet
@@ -53,9 +52,9 @@ services:
       - "--prometheus.enabled=true"
       - "--prometheus.bindAddress=hornet:9311"
 
-##################################################################
-#  Reverse Proxy and SSL                                         #
-##################################################################
+  ##################################################################
+  #  Reverse Proxy and SSL                                         #
+  ##################################################################
 
   traefik:
     container_name: traefik
@@ -71,9 +70,9 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./data/letsencrypt:/letsencrypt"
 
-##################################################################
-#  Monitoring                                                    #
-##################################################################
+  ##################################################################
+  #  Monitoring                                                    #
+  ##################################################################
 
   prometheus:
     container_name: prometheus
@@ -91,8 +90,8 @@ services:
     container_name: cadvisor
     image: gcr.io/cadvisor/cadvisor:latest
     privileged: true
-    command: 
-      - --housekeeping_interval=30s    # kubernetes default args
+    command:
+      - --housekeeping_interval=30s # kubernetes default args
       - --max_housekeeping_interval=35s
       - --event_storage_event_limit=default=0
       - --event_storage_age_limit=default=0
@@ -102,7 +101,7 @@ services:
       - --event_storage_age_limit=default=0
       - --disable_metrics=accelerator,advtcp,cpu_topology,disk,hugetlb,memory_numa,percpu,referenced_memory,resctrl,sched,tcp,udp
       - --enable_load_reader=true
-      - --docker_only=true          # only show stats for docker containers
+      - --docker_only=true # only show stats for docker containers
       - --allow_dynamic_housekeeping=true
       - --storage_duration=1m0s
     volumes:
@@ -134,10 +133,10 @@ services:
     profiles:
       - monitoring
 
-##################################################################
-#  INX Extensions                                                #
-#  disable them out by commenting out the services               #
-##################################################################
+  ##################################################################
+  #  INX Extensions                                                #
+  #  disable them out by commenting out the services               #
+  ##################################################################
 
   inx-indexer:
     container_name: inx-indexer
@@ -243,9 +242,9 @@ services:
       - "--prometheus.enabled=true"
       - "--prometheus.bindAddress=inx-dashboard:9312"
 
-##################################################################
-#  Historic Data                                                 #
-##################################################################
+  ##################################################################
+  #  Historic Data                                                 #
+  ##################################################################
 
   inx-api-core-v0:
     container_name: inx-api-core-v0
@@ -290,7 +289,7 @@ services:
     command:
       - "--db.tangle.path=data/database/tangle"
       - "--db.utxo.path=data/database/utxo"
-      - "--inx.enabled=true"      
+      - "--inx.enabled=true"
       - "--inx.address=hornet:9029"
       - "--restAPI.bindAddress=inx-api-core-v1:9094"
       - "--prometheus.enabled=true"
@@ -298,9 +297,9 @@ services:
     profiles:
       - history-chrysalis
 
-##################################################################
-#  WASP                                                          #
-##################################################################
+  ##################################################################
+  #  WASP                                                          #
+  ##################################################################
 
   wasp:
     container_name: wasp
@@ -337,6 +336,7 @@ services:
       - "--wal.path=/app/waspdb/wal"
       - "--prometheus.enabled=true"
       - "--prometheus.bindAddress=wasp:9312"
+      - "--users=/app/waspdb/users.json"
     profiles:
       - wasp
 
