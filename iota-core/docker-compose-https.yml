@@ -7,14 +7,14 @@ version: '3'
 services:
 
 ##################################################################
-#  HORNET                                                        #
+#  IOTA-CORE                                                     #
 ##################################################################
 
-  hornet:
+  iota-core:
     labels:
-      - "traefik.http.routers.hornet.entrypoints=websecure"
-      - "traefik.http.routers.hornet.tls=true"
-      - "traefik.http.routers.hornet.tls.certresolver=myresolver"
+      - "traefik.http.routers.iota-core.entrypoints=websecure"
+      - "traefik.http.routers.iota-core.tls=true"
+      - "traefik.http.routers.iota-core.tls.certresolver=myresolver"
 
 ##################################################################
 #  Reverse Proxy and SSL                                         #
@@ -51,22 +51,5 @@ services:
 
   inx-dashboard:
     labels:
-      - "traefik.http.routers.hornet-dashboard.entrypoints=websecure"
-      - "traefik.http.routers.hornet-dashboard.tls=true"
-
-##################################################################
-#  WASP                                                          #
-##################################################################
-
-  wasp:
-    labels:
-      - "traefik.http.routers.wasp-api.entrypoints=websecure"
-      - "traefik.http.routers.wasp-api.tls=true"
-
-  wasp-dashboard:
-    labels:
-      - "traefik.http.routers.wasp-dashboard.entrypoints=websecure"
-      - "traefik.http.routers.wasp-dashboard.tls=true"
-    environment:
-      - WASP_API_URL=https://${NODE_HOST:-localhost}/wasp/api
-      - L1_API_URL=https://${NODE_HOST:-localhost}
+      - "traefik.http.routers.iota-core-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.iota-core-dashboard.tls=true"
