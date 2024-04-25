@@ -1,0 +1,61 @@
+{
+  "protocol": {
+    "targetNetworkName": "testnet",
+    "milestonePublicKeyCount": 3,
+    "baseToken": {
+      "name": "TST",
+      "tickerSymbol": "TST",
+      "unit": "TST",
+      "subunit": "testies",
+      "decimals": 6,
+      "useMetricPrefix": false
+    },
+    "publicKeyRanges": [
+      {
+        "key": "7d151cd708741225baee87b5e1082e4bd56531ac65b10c2195b107c5fe0c0ccf",
+        "start": 0,
+        "end": 0
+      },
+      {
+        "key": "c0b16af888f80a248f3f3caacff291007fbd53ef73b5a52a4127ecfc7112abd7",
+        "start": 0,
+        "end": 0
+      },
+      {
+        "key": "6f759a559af073e85314b7d02b8f46578942f85e743d471eb66e96df1f346ef7",
+        "start": 0,
+        "end": 0
+      },
+      {
+        "key": "3e96b6bfb39d972212918fea5996941a0289fa109f249f0bafc033c46bb4fec0",
+        "start": 0,
+        "end": 0
+      }
+    ]
+  },
+  "db": {
+    "path": "iota-testnet/database"
+  },
+  "p2p": {
+    "db": {
+      "path": "iota-testnet/p2pstore"
+    },
+    "autopeering": {
+      "enabled": true,
+      "entryNodes": [
+        "/dns/entry-hornet-0.h.iota-testnet.iotaledger.net/udp/14626/autopeering/JB36e6D3a33dLQQQRemLKnz4Q9JQmnHd6Lq7TGxe24C2",
+        "/dns/entry-hornet-1.h.iota-testnet.iotaledger.net/udp/14626/autopeering/2ppC5FczJ1XrBGiF2Ng4emH6qYfiDyBvJDYu9NbYfwdv"
+      ]
+    }
+  },
+  "snapshots": {
+    "fullPath": "iota-testnet/snapshots/full_snapshot.bin",
+    "deltaPath": "iota-testnet/snapshots/delta_snapshot.bin",
+    "downloadURLs": [
+      {
+        "full": "https://files.iota-testnet.iotaledger.net/snapshots/latest-full_snapshot.bin",
+        "delta": "https://files.iota-testnet.iotaledger.net/snapshots/latest-delta_snapshot.bin"
+      }
+    ]
+  }
+}
