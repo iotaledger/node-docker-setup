@@ -81,8 +81,8 @@
     }
   },
   "snapshots": {
-    "fullPath": "/mainnet/snapshots/full_snapshot.bin",
-    "deltaPath": "/mainnet/snapshots/delta_snapshot.bin",
+    "fullPath": "mainnet/snapshots/full_snapshot.bin",
+    "deltaPath": "mainnet/snapshots/delta_snapshot.bin",
     "downloadURLs": [
       {
         "full": "https://files.stardust-mainnet.iotaledger.net/snapshots/latest-full_snapshot.bin",

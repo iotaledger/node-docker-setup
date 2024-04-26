@@ -81,8 +81,8 @@
     }
   },
   "snapshots": {
-    "fullPath": "/shimmer/snapshots/full_snapshot.bin",
-    "deltaPath": "/shimmer/snapshots/delta_snapshot.bin",
+    "fullPath": "shimmer/snapshots/full_snapshot.bin",
+    "deltaPath": "shimmer/snapshots/delta_snapshot.bin",
     "downloadURLs": [
       {
         "full": "https://files.shimmer.network/snapshots/latest-full_snapshot.bin",
