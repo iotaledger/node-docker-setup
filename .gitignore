@@ -2,4 +2,5 @@
 iota/data
 shimmer/data
 testnet/data
+testnet-2.0/
 .env
