@@ -3,7 +3,6 @@
 # https://github.com/iotaledger/node-docker-setup
 #
 
-version: '3'
 services:
 
 ##################################################################
