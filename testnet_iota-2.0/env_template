@@ -72,7 +72,7 @@
 #DASHBOARD_USERNAME=admin
 
 # Generate a new password and salt using the following command:
-#   docker compose run hornet tools pwd-hash
+#   docker run -it iotaledger/hornet:2.0 tools pwd-hash
 #DASHBOARD_PASSWORD=0000000000000000000000000000000000000000000000000000000000000000
 #DASHBOARD_SALT=0000000000000000000000000000000000000000000000000000000000000000
 

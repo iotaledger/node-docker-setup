@@ -42,7 +42,7 @@ services:
     command: >
       -c config.json
       --p2p.bindMultiAddresses=/ip4/0.0.0.0/tcp/15600,/ip6/::/tcp/15600
-      --p2p.db.path=data/p2pstore
+      --p2p.identityPrivateKeyFilePath=data/p2p/identity.key
       --profiling.bindAddress=iota-core:6060
       --debugAPI.db.path=data/debug
       --db.path=data/database
