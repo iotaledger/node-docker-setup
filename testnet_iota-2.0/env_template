@@ -39,6 +39,9 @@
 # You need to specify the domain name of your node to automatically get a valid SSL certificate via "letsencrypt.org" 
 #NODE_HOST=node.your-domain.com
 
+# Uncomment the following line to expose your DNS address for autopeering instead of the IP address.
+#EXTERNAL_P2P_MULTIADDRESS=/dns/${NODE_HOST}/tcp/15600
+
 #######################
 # config file section #
 #######################

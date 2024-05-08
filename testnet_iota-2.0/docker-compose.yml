@@ -42,6 +42,7 @@ services:
       -c config.json
       --p2p.bindMultiAddresses=/ip4/0.0.0.0/tcp/15600,/ip6/::/tcp/15600
       --p2p.identityPrivateKeyFilePath=data/p2p/identity.key
+      --p2p.autopeering.externalMultiAddresses=${EXTERNAL_P2P_MULTIADDRESS:-}
       --profiling.bindAddress=iota-core:6060
       --debugAPI.db.path=data/debug
       --db.path=data/database
