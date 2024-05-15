@@ -11,7 +11,7 @@ services:
 
   iota-core:
     container_name: iota-core
-    image: iotaledger/iota-core:1.0-alpha
+    image: iotaledger/iota-core:1.0-beta
     ulimits:
       nofile:
         soft: 16384
@@ -141,7 +141,7 @@ services:
 
   inx-indexer:
     container_name: inx-indexer
-    image: iotaledger/inx-indexer:2.0-alpha
+    image: iotaledger/inx-indexer:2.0-beta
     ulimits:
       nofile:
         soft: 16384
@@ -162,7 +162,7 @@ services:
 
   inx-mqtt:
     container_name: inx-mqtt
-    image: iotaledger/inx-mqtt:2.0-alpha
+    image: iotaledger/inx-mqtt:2.0-beta
     stop_grace_period: 1m
     restart: unless-stopped
     depends_on:
@@ -176,7 +176,7 @@ services:
 
   inx-dashboard:
     container_name: inx-dashboard
-    image: iotaledger/inx-dashboard:2.0-alpha
+    image: iotaledger/inx-dashboard:2.0-beta
     stop_grace_period: 1m
     restart: unless-stopped
     depends_on:
@@ -202,7 +202,7 @@ services:
 
   inx-blockissuer:
     container_name: inx-blockissuer
-    image: iotaledger/inx-blockissuer:1.0-alpha
+    image: iotaledger/inx-blockissuer:1.0-beta
     stop_grace_period: 1m
     restart: unless-stopped
     depends_on:
@@ -222,7 +222,7 @@ services:
 
   inx-validator:
     container_name: inx-validator
-    image: iotaledger/inx-validator:1.0-alpha
+    image: iotaledger/inx-validator:1.0-beta
     stop_grace_period: 1m
     restart: unless-stopped
     depends_on:

@@ -6,7 +6,6 @@
 #
 
 SNAPSHOT_FILE_PATH="data/snapshots/snapshot.bin"
-SNAPSHOT_URL=""
 
 if [ ! -f .env ]; then
   echo "No .env file found. Please see README.md for more details"
@@ -39,7 +38,7 @@ fi
 
 # Download the snapshot file
 echo "Downloading latest snapshot from $SNAPSHOT_URL..."
-curl -o $SNAPSHOT_FILE_PATH $SNAPSHOT_URL
+curl -L -o $SNAPSHOT_FILE_PATH $SNAPSHOT_URL
 
 # Check if the snapshot download was successful
 if [ $? -eq 0 ]; then

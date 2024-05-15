@@ -1,0 +1,17 @@
+{
+  "protocol": {
+    "baseToken": {
+      "name": "TST",
+      "tickerSymbol": "TST",
+      "unit": "TST",
+      "subunit": "testies",
+      "decimals": 6,
+      "useMetricPrefix": false
+    }
+  },
+  "p2p": {
+    "autopeering": {
+      "bootstrapPeers": []
+    }
+  }
+}

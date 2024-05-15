@@ -1,9 +1,0 @@
-{
-  "p2p": {
-    "autopeering": {
-      "bootstrapPeers": [
-        ""
-      ]
-    }
-  }
-}

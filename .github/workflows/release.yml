@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        tag_prefix: ['iota', 'shimmer', 'testnet', 'iota-testnet', 'testnet_iota-2.0']
+        tag_prefix: ['iota', 'iota-testnet', 'iota2-testnet', 'shimmer', 'shimmer-testnet']
     steps:
       - name: Check out code into the Go module directory
         if: startsWith(github.ref_name, matrix.tag_prefix)
