@@ -1,0 +1,42 @@
+scrape_configs:
+  - job_name: cadvisor
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'cadvisor:8080'
+
+  - job_name: iota-core
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'iota-core:9311'
+
+  - job_name: inx-indexer
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'inx-indexer:9312'
+
+  - job_name: inx-mqtt
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'inx-mqtt:9312'
+
+  - job_name: inx-dashboard
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'inx-dashboard:9312'
+  
+  - job_name: traefik
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+          - 'traefik:8080'

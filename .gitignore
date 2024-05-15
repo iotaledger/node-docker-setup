@@ -1,5 +1,8 @@
 .DS_Store
-iota/data
-shimmer/data
-testnet/data
 .env
+
+iota/data
+iota-testnet/data
+iota2-testnet/data
+shimmer/data
+shimmer-testnet/data

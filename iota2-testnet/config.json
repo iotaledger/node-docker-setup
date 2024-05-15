@@ -1,0 +1,19 @@
+{
+  "protocol": {
+    "baseToken": {
+      "name": "TST",
+      "tickerSymbol": "TST",
+      "unit": "TST",
+      "subunit": "testies",
+      "decimals": 6,
+      "useMetricPrefix": false
+    }
+  },
+  "p2p": {
+    "autopeering": {
+      "bootstrapPeers": [
+        "/dns/access-0.h.nova-testnet.iotaledger.net/tcp/15600/p2p/12D3KooWRKnwe6FrswrVSq2jFuDTBEAb7iAKUTLkmCK6MDPBySMo"
+      ]
+    }
+  }
+}

@@ -1,0 +1,100 @@
+# This is an example configuration file.
+# Keep this file as an example and make a working file with the following command:
+#
+#   cp env_template .env
+#
+# You can edit the .env file with a command like: 
+#
+#   nano .env 
+#
+# The .env file is your personal configuration and is used by Docker.
+# Uncomment and edit the lines to fit your needs
+
+#
+# HINT: You either have to choose a HTTP or a HTTPS setup. 
+#       Do not uncomment lines in both sections.
+#
+
+######################
+# HTTP setup section #
+######################
+
+# The default port for the HTTP setup is 80. If you want to change that, uncomment the following line.
+#HTTP_PORT=8080
+
+# HTTP setup is exposed on localhost only by default. 
+# If you want to expose it in your local network, specify the local IP address of the node in your network.  
+#NODE_HOST=192.168.1.10
+
+#######################
+# HTTPS setup section #
+#######################
+
+# The following line needs to be uncommented to activate HTTPS (HTTP access will be deactivated).
+#COMPOSE_FILE=docker-compose.yml:docker-compose-https.yml
+
+# You need to specify your email address to automatically get a valid SSL certificate via "letsencrypt.org"
+#ACME_EMAIL=your-email@example.com
+
+# You need to specify the domain name of your node to automatically get a valid SSL certificate via "letsencrypt.org" 
+#NODE_HOST=node.your-domain.com
+
+# Uncomment the following line to expose your DNS address for autopeering instead of the IP address.
+#EXTERNAL_P2P_MULTIADDRESS=/dns/${NODE_HOST}/tcp/15600
+
+#######################
+# config file section #
+#######################
+
+# Overwrite the default config file by uncommenting the following line (default: config.json).
+#IOTA_CORE_CONFIG_FILE=config.json
+
+####################
+# profiles section #
+####################
+
+# Uncomment the following line to enable prometheus and grafana
+# Grafana will be available under <NODE_HOST>/grafana
+# WARNING: Do not forget to set a new password after the first start (default: admin/admin)
+#COMPOSE_PROFILES=${COMPOSE_PROFILES},monitoring
+
+# Uncomment the following line to enable the blockissuer service
+# Blockissuer API will be available under <NODE_HOST>/api/blockissuer/v1
+# WARNING: Do not forget to set BLOCKISSUER_ACCOUNT_ADDR and BLOCKISSUER_PRV_KEY in the blockissuer section
+#COMPOSE_PROFILES=${COMPOSE_PROFILES},blockissuer
+
+# Uncomment the following line to enable the validator service
+# WARNING: Do not forget to set VALIDATOR_ACCOUNT_ADDR and VALIDATOR_PRV_KEY in the validator section
+#COMPOSE_PROFILES=${COMPOSE_PROFILES},validator
+
+#####################
+# dashboard section #
+#####################
+
+# Choose a dashboard username (default: admin)
+#DASHBOARD_USERNAME=admin
+
+# Generate a new password and salt using the following command:
+#   docker compose run iota-core tools pwd-hash
+#DASHBOARD_PASSWORD=0000000000000000000000000000000000000000000000000000000000000000
+#DASHBOARD_SALT=0000000000000000000000000000000000000000000000000000000000000000
+
+#######################
+# blockissuer section #
+#######################
+
+# Set the account address of the blockissuer service.
+#BLOCKISSUER_ACCOUNT_ADDR=""
+
+# Set the private key of the blockissuer service.
+#BLOCKISSUER_PRV_KEY=""
+
+#####################
+# validator section #
+#####################
+
+# Set the account address of the validator.
+#VALIDATOR_ACCOUNT_ADDR=""
+
+# Set the private key of the validator.
+#VALIDATOR_PRV_KEY=""

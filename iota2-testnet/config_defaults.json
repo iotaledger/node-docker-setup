@@ -1,0 +1,139 @@
+{
+  "app": {
+    "checkForUpdates": true,
+    "shutdown": {
+      "stopGracePeriod": "5m",
+      "log": {
+        "enabled": true,
+        "filePath": "shutdown.log"
+      }
+    }
+  },
+  "logger": {
+    "name": "",
+    "level": "info",
+    "timeFormat": "rfc3339",
+    "outputPaths": [
+      "stdout"
+    ]
+  },
+  "p2p": {
+    "bindMultiAddresses": [
+      "/ip4/0.0.0.0/tcp/15600",
+      "/ip6/::/tcp/15600"
+    ],
+    "connectionManager": {
+      "highWatermark": 10,
+      "lowWatermark": 5
+    },
+    "identityPrivateKey": "",
+    "identityPrivateKeyFilePath": "testnet/p2p/identity.key",
+    "autopeering": {
+      "maxPeers": 5,
+      "bootstrapPeers": [],
+      "allowLocalIPs": false,
+      "externalMultiAddresses": []
+    }
+  },
+  "profiling": {
+    "enabled": false,
+    "bindAddress": "localhost:6060"
+  },
+  "restAPI": {
+    "bindAddress": "0.0.0.0:14265",
+    "publicRoutes": [
+      "/health",
+      "/api/routes",
+      "/api/core/v3/info",
+      "/api/core/v3/network*",
+      "/api/core/v3/blocks*",
+      "/api/core/v3/transactions*",
+      "/api/core/v3/commitments*",
+      "/api/core/v3/outputs*",
+      "/api/core/v3/accounts*",
+      "/api/core/v3/validators*",
+      "/api/core/v3/rewards*",
+      "/api/core/v3/committee*",
+      "/api/debug/v2/*",
+      "/api/indexer/v2/*",
+      "/api/mqtt/v2",
+      "/api/blockissuer/v1/*"
+    ],
+    "protectedRoutes": [
+      "/api/*"
+    ],
+    "debugRequestLoggerEnabled": false,
+    "maxPageSize": 100,
+    "maxCacheSize": "50MB",
+    "jwtAuth": {
+      "salt": "IOTA"
+    },
+    "limits": {
+      "maxBodyLength": "1M",
+      "maxResults": 1000
+    }
+  },
+  "debugAPI": {
+    "enabled": false,
+    "db": {
+      "path": "testnet/debug",
+      "maxOpenDBs": 2,
+      "granularity": 100,
+      "pruning": {
+        "threshold": 1
+      }
+    }
+  },
+  "metricsTracker": {
+    "enabled": true
+  },
+  "db": {
+    "engine": "rocksdb",
+    "path": "testnet/database",
+    "maxOpenDBs": 5,
+    "pruning": {
+      "threshold": 30,
+      "size": {
+        "enabled": true,
+        "targetSize": "30GB",
+        "reductionPercentage": 10,
+        "cooldownTime": "5m"
+      }
+    }
+  },
+  "protocol": {
+    "snapshot": {
+      "path": "testnet/snapshot.bin",
+      "depth": 5
+    },
+    "commitmentCheck": true,
+    "filter": {
+      "maxAllowedClockDrift": "5s"
+    },
+    "protocolParametersPath": "testnet/protocol_parameters.json",
+    "baseToken": {
+      "name": "Shimmer",
+      "tickerSymbol": "SMR",
+      "unit": "SMR",
+      "subunit": "glow",
+      "decimals": 6
+    }
+  },
+  "retainer": {
+    "debugStoreErrorMessages": false
+  },
+  "node": {
+    "alias": "IOTA-Core node"
+  },
+  "prometheus": {
+    "enabled": true,
+    "bindAddress": "0.0.0.0:9311",
+    "goMetrics": false,
+    "processMetrics": false,
+    "promhttpMetrics": false
+  },
+  "inx": {
+    "enabled": false,
+    "bindAddress": "localhost:9029"
+  }
+}
