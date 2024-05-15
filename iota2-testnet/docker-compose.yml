@@ -193,6 +193,7 @@ services:
     command: >
       --inx.address=iota-core:9029
       --dashboard.bindAddress=inx-dashboard:8081
+      --dashboard.explorerURL=https://explorer.iota.org/iota2-testnet
       --dashboard.auth.identityFilePath=/app/dashboard/identity.key
       --dashboard.auth.username=${DASHBOARD_USERNAME:-admin}
       --dashboard.auth.passwordHash=${DASHBOARD_PASSWORD:-0000000000000000000000000000000000000000000000000000000000000000}

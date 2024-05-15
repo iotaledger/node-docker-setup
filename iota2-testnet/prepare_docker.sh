@@ -6,6 +6,7 @@
 #
 
 SNAPSHOT_FILE_PATH="data/snapshots/snapshot.bin"
+SNAPSHOT_URL="https://files.nova-testnet.iotaledger.net/snapshots/latest-snapshot.bin"
 
 if [ ! -f .env ]; then
   echo "No .env file found. Please see README.md for more details"
