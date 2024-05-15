@@ -33,20 +33,6 @@ scrape_configs:
     static_configs:
       - targets:
           - 'inx-dashboard:9312'
-
-  - job_name: inx-blockissuer
-    scrape_interval: 5s
-    scrape_timeout: 5s
-    static_configs:
-      - targets:
-          - 'inx-blockissuer:9312'
-
-  - job_name: inx-validator
-    scrape_interval: 5s
-    scrape_timeout: 5s
-    static_configs:
-      - targets:
-          - 'inx-validator:9312'
   
   - job_name: traefik
     scrape_interval: 5s
