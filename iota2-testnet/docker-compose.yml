@@ -21,7 +21,7 @@ services:
       traefik:
         condition: service_started
     ports:
-      - "15600:15600/tcp"
+      - "${P2P_GOSSIP_PORT:-15600}:15600/tcp"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.iota-core.service=iota-core"
