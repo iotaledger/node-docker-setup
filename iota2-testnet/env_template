@@ -49,6 +49,9 @@
 # Overwrite the default config file by uncommenting the following line (default: config.json).
 #IOTA_CORE_CONFIG_FILE=config.json
 
+# The default port for gossip is 15600. If you want to change that, uncomment the following line and change the port number.
+#P2P_GOSSIP_PORT=15600
+
 ####################
 # profiles section #
 ####################
