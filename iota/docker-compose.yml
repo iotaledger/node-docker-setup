@@ -20,7 +20,7 @@ services:
       traefik:
         condition: service_started
     ports:
-      - "15600:15600/tcp"
+      - "${P2P_GOSSIP_PORT:-15600}:15600/tcp"
       - "14626:14626/udp"
     labels:
       - "traefik.enable=true"
