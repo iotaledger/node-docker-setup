@@ -44,6 +44,7 @@ services:
       - "--db.path=data/database"
       - "--p2p.db.path=data/p2pstore"
       - "--p2p.bindMultiAddresses=/ip4/0.0.0.0/tcp/15600,/ip6/::/tcp/15600"
+      - "--p2p.autopeering.externalMultiAddresses=${EXTERNAL_P2P_MULTIADDRESS:-}"
       - "--snapshots.fullPath=data/snapshots/full_snapshot.bin"
       - "--snapshots.deltaPath=data/snapshots/delta_snapshot.bin"
       - "--inx.enabled=true"
