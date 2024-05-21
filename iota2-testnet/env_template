@@ -10,6 +10,13 @@
 # The .env file is your personal configuration and is used by Docker.
 # Uncomment and edit the lines to fit your needs
 
+######################
+# Port setup section #
+######################
+
+# The default port for gossip is 15600. If you want to change that, uncomment the following line and change the port number.
+#P2P_GOSSIP_PORT=15601
+
 #
 # HINT: You either have to choose a HTTP or a HTTPS setup. 
 #       Do not uncomment lines in both sections.
@@ -40,7 +47,7 @@
 #NODE_HOST=node.your-domain.com
 
 # Uncomment the following line to expose your DNS address for autopeering instead of the IP address.
-#EXTERNAL_P2P_MULTIADDRESS=/dns/${NODE_HOST}/tcp/15600
+#EXTERNAL_P2P_MULTIADDRESS=/dns/${NODE_HOST}/tcp/${P2P_GOSSIP_PORT:-15600}
 
 #######################
 # config file section #
@@ -48,9 +55,6 @@
 
 # Overwrite the default config file by uncommenting the following line (default: config.json).
 #IOTA_CORE_CONFIG_FILE=config.json
-
-# The default port for gossip is 15600. If you want to change that, uncomment the following line and change the port number.
-#P2P_GOSSIP_PORT=15600
 
 ####################
 # profiles section #
