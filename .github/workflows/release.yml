@@ -13,11 +13,11 @@ jobs:
         tag_prefix: ['iota', 'iota-testnet', 'iota2-testnet', 'shimmer', 'shimmer-testnet']
     steps:
       - name: Check out code into the Go module directory
-        if: startsWith(github.ref_name, matrix.tag_prefix)
+        if: startsWith(github.ref_name, matrix.tag_prefix) && (contains(matrix.ref_name, 'testnet') == contains(matrix.tag_prefix, 'testnet'))
         uses: actions/checkout@v4
 
       - name: Find and Replace VERSION
-        if: startsWith(github.ref_name, matrix.tag_prefix)
+        if: startsWith(github.ref_name, matrix.tag_prefix) && (contains(matrix.ref_name, 'testnet') == contains(matrix.tag_prefix, 'testnet'))
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "__VERSION__"
@@ -25,14 +25,14 @@ jobs:
           regex: false
 
       - name: Create node-docker-setup_${{ matrix.tag_prefix }}.tar.gz
-        if: startsWith(github.ref_name, matrix.tag_prefix)
+        if: startsWith(github.ref_name, matrix.tag_prefix) && (contains(matrix.ref_name, 'testnet') == contains(matrix.tag_prefix, 'testnet'))
         uses: ihiroky/archive-action@v1
         with:
           root_dir: ${{ matrix.tag_prefix }}
           file_path: node-docker-setup_${{ matrix.tag_prefix }}.tar.gz
 
       - name: Upload node-docker-setup_${{ matrix.tag_prefix }}.tar.gz file
-        if: startsWith(github.ref_name, matrix.tag_prefix)
+        if: startsWith(github.ref_name, matrix.tag_prefix) && (contains(matrix.ref_name, 'testnet') == contains(matrix.tag_prefix, 'testnet'))
         uses: Shopify/upload-to-release@v2.0.0
         with:
           name: node-docker-setup_${{ github.ref_name }}.tar.gz
