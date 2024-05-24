@@ -3,7 +3,6 @@
 # https://github.com/iotaledger/node-docker-setup
 #
 
-version: "3"
 services:
   ##################################################################
   #  HORNET                                                        #
@@ -21,8 +20,8 @@ services:
       traefik:
         condition: service_started
     ports:
-      - "${P2P_GOSSIP_PORT:-15600}:15600/tcp"
-      - "14626:14626/udp"
+      - "${HORNET_GOSSIP_PORT:-15600}:${HORNET_GOSSIP_PORT:-15600}/tcp"
+      - "${HORNET_AUTOPEERING_PORT:-14626}:${HORNET_AUTOPEERING_PORT:-14626}/udp"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hornet.service=hornet"
@@ -44,8 +43,8 @@ services:
       - "config.json"
       - "--db.path=data/database"
       - "--p2p.db.path=data/p2pstore"
-      - "--p2p.bindMultiAddresses=/ip4/0.0.0.0/tcp/15600,/ip6/::/tcp/15600"
-      - "--p2p.autopeering.externalMultiAddresses=${EXTERNAL_P2P_MULTIADDRESS:-}"
+      - "--p2p.bindMultiAddresses=/ip4/0.0.0.0/tcp/${HORNET_GOSSIP_PORT:-15600},/ip6/::/tcp/${HORNET_GOSSIP_PORT:-15600}"
+      - "--p2p.autopeering.bindAddress=0.0.0.0:${HORNET_AUTOPEERING_PORT:-14626}"
       - "--snapshots.fullPath=data/snapshots/full_snapshot.bin"
       - "--snapshots.deltaPath=data/snapshots/delta_snapshot.bin"
       - "--inx.enabled=true"

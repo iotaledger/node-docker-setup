@@ -21,7 +21,7 @@ services:
       traefik:
         condition: service_started
     ports:
-      - "${P2P_GOSSIP_PORT:-15600}:15600/tcp"
+      - "${IOTA_CORE_GOSSIP_PORT:-15600}:${IOTA_CORE_GOSSIP_PORT:-15600}/tcp"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.iota-core.service=iota-core"
@@ -40,9 +40,9 @@ services:
       - ./data:/app/data
     command: >
       -c config.json
-      --p2p.bindMultiAddresses=/ip4/0.0.0.0/tcp/15600,/ip6/::/tcp/15600
+      --p2p.bindMultiAddresses=/ip4/0.0.0.0/tcp/${IOTA_CORE_GOSSIP_PORT:-15600},/ip6/::/tcp/${IOTA_CORE_GOSSIP_PORT:-15600}
       --p2p.identityPrivateKeyFilePath=data/p2p/identity.key
-      --p2p.autopeering.externalMultiAddresses=${EXTERNAL_P2P_MULTIADDRESS:-}
+      --p2p.autopeering.externalMultiAddresses=${IOTA_CORE_EXTERNAL_P2P_MULTIADDRESS:-}
       --profiling.bindAddress=iota-core:6060
       --debugAPI.db.path=data/debug
       --db.path=data/database

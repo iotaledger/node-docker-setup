@@ -10,13 +10,6 @@
 # The .env file is your personal configuration and is used by Docker.
 # Uncomment and edit the lines to fit your needs
 
-######################
-# Port setup section #
-######################
-
-# The default port for gossip is 15600. If you want to change that, uncomment the following line and change the port number.
-#P2P_GOSSIP_PORT=15601
-
 #
 # HINT: You either have to choose a HTTP or a HTTPS setup. 
 #       Do not uncomment lines in both sections.
@@ -46,16 +39,6 @@
 # You need to specify the domain name of your node to automatically get a valid SSL certificate via "letsencrypt.org" 
 #NODE_HOST=node.your-domain.com
 
-# Uncomment the following line to expose your DNS address for autopeering instead of the IP address.
-#EXTERNAL_P2P_MULTIADDRESS=/dns/${NODE_HOST}/tcp/${P2P_GOSSIP_PORT:-15600}
-
-#######################
-# config file section #
-#######################
-
-# Overwrite the default config file by uncommenting the following line (default: config.json).
-#IOTA_CORE_CONFIG_FILE=config.json
-
 ####################
 # profiles section #
 ####################
@@ -75,11 +58,33 @@
 #COMPOSE_PROFILES=${COMPOSE_PROFILES},validator
 
 #####################
+# IOTA-Core section #
+#####################
+
+# Overwrite the default config file by uncommenting the following line (default: config.json).
+#IOTA_CORE_CONFIG_FILE=config.json
+
+# Uncomment the following line change the IOTA-Core gossip TCP port (default: 15600).
+#IOTA_CORE_GOSSIP_PORT=15600
+
+# Uncomment the following line to expose your DNS address for autopeering instead of the IP address.
+#IOTA_CORE_EXTERNAL_P2P_MULTIADDRESS=/dns/${NODE_HOST}/tcp/${IOTA_CORE_GOSSIP_PORT:-15600}
+
+#####################
 # dashboard section #
 #####################
 
 # Choose a dashboard username (default: admin)
 #DASHBOARD_USERNAME=admin
+
+# Generate a new password and salt by using the following command:
+#
+#   docker compose run iota-core tools pwd-hash
+#
+# or if you are not in the same directory as the docker-compose.yml file:
+#
+#   docker run -it --rm iotaledger/iota-core:1.0-beta tools pwd-hash
+#
 
 # Generate a new password and salt using the following command:
 #   docker compose run iota-core tools pwd-hash
