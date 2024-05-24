@@ -70,16 +70,6 @@
 # WASP Dashboard will be available under <NODE_HOST>/wasp/dashboard
 #COMPOSE_PROFILES=${COMPOSE_PROFILES},wasp
 
-##############################
-# Wasp configuration section #
-##############################
-
-# Choose how many state to keep
-# MIN_STATES_TO_KEEP=10000
-
-# Path to download snapshot from
-# NETWORK_PATHS=https://files.stardust-mainnet.iotaledger.net/?prefix=wasp_snapshots/iota1pzt3mstq6khgc3tl0mwuzk3eqddkryqnpdxmk4nr25re2466uxwm28qqxu5/
-
 #####################
 # Dashboard section #
 #####################
@@ -91,3 +81,13 @@
 #   docker compose run hornet tools pwd-hash
 #DASHBOARD_PASSWORD=0000000000000000000000000000000000000000000000000000000000000000
 #DASHBOARD_SALT=0000000000000000000000000000000000000000000000000000000000000000
+
+################
+# WASP section #
+################
+
+# Choose how many states to keep
+#WASP_PRUNING_MIN_STATES_TO_KEEP=10000
+
+# Path to download wasp snapshot from
+#WASP_SNAPSHOT_NETWORK_PATHS=https://files.stardust-mainnet.iotaledger.net/?prefix=wasp_snapshots/iota1pzt3mstq6khgc3tl0mwuzk3eqddkryqnpdxmk4nr25re2466uxwm28qqxu5/
