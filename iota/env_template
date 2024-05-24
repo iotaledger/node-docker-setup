@@ -39,13 +39,6 @@
 # You need to specify the domain name of your node to automatically get a valid SSL certificate via "letsencrypt.org" 
 #NODE_HOST=node.your-domain.com
 
-#######################
-# config file section #
-#######################
-
-# Overwrite the default config file by uncommenting the following line (default: config.json).
-#HORNET_CONFIG_FILE=config.json
-
 ####################
 # profiles section #
 ####################
@@ -70,6 +63,19 @@
 # WASP Dashboard will be available under <NODE_HOST>/wasp/dashboard
 #COMPOSE_PROFILES=${COMPOSE_PROFILES},wasp
 
+##################
+# HORNET section #
+##################
+
+# Overwrite the default config file by uncommenting the following line (default: config.json).
+#HORNET_CONFIG_FILE=config.json
+
+# Uncomment the following line change the HORNET gossip TCP port (default: 15600).
+#HORNET_GOSSIP_PORT=15600
+
+# Uncomment the following line change the HORNET autopeering UDP port (default: 14626).
+#HORNET_AUTOPEERING_PORT=14626
+
 #####################
 # Dashboard section #
 #####################
@@ -77,8 +83,14 @@
 # Choose a dashboard username (default: admin)
 #DASHBOARD_USERNAME=admin
 
-# Generate a new password and salt using the following command:
+# Generate a new password and salt by using the following command:
+#
 #   docker compose run hornet tools pwd-hash
+#
+# or if you are not in the same directory as the docker-compose.yml file:
+#
+#   docker run -it --rm iotaledger/hornet:latest tools pwd-hash
+#
 #DASHBOARD_PASSWORD=0000000000000000000000000000000000000000000000000000000000000000
 #DASHBOARD_SALT=0000000000000000000000000000000000000000000000000000000000000000
 
@@ -86,8 +98,8 @@
 # WASP section #
 ################
 
-# Choose how many states to keep
+# Uncomment the following line if you want to change how many states are kept in wasp (default: 10000).
 #WASP_PRUNING_MIN_STATES_TO_KEEP=10000
 
-# Path to download wasp snapshot from
+# Uncomment the following line if you want to change the wasp snapshot source.
 #WASP_SNAPSHOT_NETWORK_PATHS=https://files.stardust-mainnet.iotaledger.net/?prefix=wasp_snapshots/iota1pzt3mstq6khgc3tl0mwuzk3eqddkryqnpdxmk4nr25re2466uxwm28qqxu5/
