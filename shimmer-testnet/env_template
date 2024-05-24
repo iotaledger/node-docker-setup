@@ -70,6 +70,16 @@
 # WASP Dashboard will be available under <NODE_HOST>/wasp/dashboard
 #COMPOSE_PROFILES=${COMPOSE_PROFILES},wasp
 
+##############################
+# Wasp configuration section #
+##############################
+
+# Choose how many state to keep
+# MIN_STATES_TO_KEEP=10000
+
+# Path to download snapshot from
+# NETWORK_PATHS=https://files.testnet.shimmer.network/wasp_snapshots
+
 #####################
 # Dashboard section #
 #####################

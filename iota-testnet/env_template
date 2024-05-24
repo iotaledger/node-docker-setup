@@ -70,6 +70,16 @@
 # WASP Dashboard will be available under <NODE_HOST>/wasp/dashboard
 #COMPOSE_PROFILES=${COMPOSE_PROFILES},wasp
 
+##############################
+# Wasp configuration section #
+##############################
+
+# Choose how many state to keep
+# MIN_STATES_TO_KEEP=10000
+
+# Path to download snapshot from
+# NETWORK_PATHS=https://files.iota-testnet.iotaledger.net/?prefix=wasp_snapshots/tst1pzxsrr7apqkdzz633dyntmvxwtyvk029p39te5j0m33q6946h7akzv663zu/
+
 #####################
 # Dashboard section #
 #####################
