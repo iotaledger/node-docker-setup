@@ -81,3 +81,13 @@
 #   docker compose run hornet tools pwd-hash
 #DASHBOARD_PASSWORD=0000000000000000000000000000000000000000000000000000000000000000
 #DASHBOARD_SALT=0000000000000000000000000000000000000000000000000000000000000000
+
+################
+# WASP section #
+################
+
+# Choose how many states to keep
+#WASP_PRUNING_MIN_STATES_TO_KEEP=10000
+
+# Path to download wasp snapshot from
+#WASP_SNAPSHOT_NETWORK_PATHS=https://files.shimmer.shimmer.network/wasp_snapshots

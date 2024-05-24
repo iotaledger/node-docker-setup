@@ -336,6 +336,8 @@ services:
       - "--prometheus.enabled=true"
       - "--prometheus.bindAddress=wasp:9312"
       - "--users=/app/waspdb/users.json"
+      - "--stateManager.pruningMinStatesToKeep=${WASP_PRUNING_MIN_STATES_TO_KEEP:-10000}"
+      - "--snapshots.networkPaths=${WASP_SNAPSHOT_NETWORK_PATHS:-[]}"
     profiles:
       - wasp
 
